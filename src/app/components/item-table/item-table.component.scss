@@ -1,0 +1,67 @@
+table {
+    width: 100%;
+}
+
+tr {
+    box-shadow: 0  1.5px #000 ;
+}
+
+td, th {
+    min-width: 40px;
+    text-align: center;
+}
+
+td {
+    padding: 2px;
+}
+
+p { margin: 0; padding: 0; }
+
+p.text-center {
+    margin: 0;
+    padding: 4px;
+}
+
+.separe-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.down-center {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.item-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    padding: 10px;
+
+    h3 {
+        padding: 0;
+        margin: 0;
+        font: {
+            weight: 1000;
+            family: 'Albion', 'Lucida Console';
+            size: 24px;
+        }
+    }
+
+    img {
+        width: 60px;
+    }
+
+
+}
+
+hr {
+    background-color: #000;
+    height: 2px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
