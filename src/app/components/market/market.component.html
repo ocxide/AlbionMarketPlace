@@ -1,22 +1,4 @@
-<form (ngSubmit)="searchItem()" [formGroup]="searchItemForm">
-
-    <mat-form-field appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="category" multiple>
-          <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    <mat-form-field class="example-form-field" appearance="fill">
-        <mat-label>Item Name</mat-label>
-        <input matInput type="text" formControlName="item_id">
-        <button *ngIf="searchItemForm.controls['item_id'].value" matSuffix mat-icon-button aria-label="Clear" (click)="searchItemForm.controls['item_id'].reset();">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-
-      <button type="submit">dad</button>
-</form>
+<item-search (itemSubmit)="searchItem($event)"></item-search>
 
 <div class="">
   <item-table *ngFor="let item of itemList" [item]="item" [currentSize]="windowSize"></item-table>

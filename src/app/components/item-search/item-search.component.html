@@ -1,0 +1,44 @@
+<mat-form-field class="itemNameInput">
+    <mat-label>Item Name</mat-label>
+    <input matInput type="text" [formControl]="itemNameInput" [matAutocomplete]="auto" autocomplete="off">
+    <!-- <button *ngIf="searchItemForm.controls['item_id'].value" matSuffix mat-icon-button aria-label="Clear" (click)="searchItemForm.controls['item_id'].reset();">
+        <mat-icon>close</mat-icon>
+    </button> -->
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectItem($event.option._getHostElement().attributes.getNamedItem('item_id')!.value)">
+        <mat-option *ngFor="let item of filItems | async" [value]="item.item_name" [attr.item_ID]="item.item_id" class="search-item-autocomplete">
+            <span>{{ item.item_name }}</span>
+            <img src="https://albiononline2d.ams3.cdn.digitaloceanspaces.com/thumbnails/orig/{{item.item_id}}" alt="">
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<form (ngSubmit)="sendItem()" [formGroup]="searchItemForm">
+
+    <div class="">
+        <mat-form-field id="tier">
+            <mat-label>Tier</mat-label>
+            <mat-select formControlName="tier" multiple>
+              <mat-option *ngFor="let tier of tierList" [value]="tier">{{ tier }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field id="itemId">
+            <mat-label>Item Name</mat-label>
+            <input matInput type="text" formControlName="item_id" autocomplete="off">
+            <button *ngIf="searchItemForm.controls['item_id'].value" matSuffix mat-icon-button aria-label="Clear" (click)="searchItemForm.controls['item_id'].reset();">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field id="enchant">
+            <mat-label>Encantamiento</mat-label>
+            <mat-select formControlName="enchant" multiple>
+                <mat-option *ngFor="let enchant of enchantList" [value]="enchant">{{ enchant }}</mat-option>
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <button type="submit" mat-flat-button color="primary">Buscar</button>
+</form>

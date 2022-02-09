@@ -1,0 +1,29 @@
+form {
+    padding: 0px 20px;
+    padding-top: 20px;
+
+    #tier {
+        width: 20%;
+    }
+
+    #itemId {
+        width: 70%;
+    }
+
+    #enchant {
+        width: 10%;
+    }
+}
+
+.searcher {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 .5px 1px #000, .5px 0 1px #000, -.5px 0 1px #000;
+}
+
+.itemNameInput {
+    width: 100%;
+    padding: 40px;
+}

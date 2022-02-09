@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit, QueryList, ViewChildren, HostListener } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, QueryList, ViewChildren, HostListener } from '@angular/core';
 
 import { MarketService } from 'src/app/services/market.service';
 import { ItemQueryI } from 'src/app/interfaces/item-i';
@@ -15,15 +14,6 @@ export class MarketComponent implements OnInit {
 
   itemList: ItemI[] = [];
   itemShowI: ItemQueryI[] = [];
-
-  categoryList: string[] = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'];
-
-  searchItemForm: FormGroup = new FormGroup(
-    {
-      category: new FormControl('', Validators.required),
-      item_id: new FormControl('', Validators.required)
-    }
-  );
 
   windowSizes = {
     "sm": 500,
@@ -52,7 +42,7 @@ export class MarketComponent implements OnInit {
     this.windowSize = this.detectWindowSize();
 
     //this.searchItem();
-    this._searchItem('BAG', [4, 5]);
+    //this._searchItem('BAG', [4, 5]);
     
   }
 
@@ -67,19 +57,10 @@ export class MarketComponent implements OnInit {
     }
   }
 
-  searchItem(): void {
-    // if (this.searchItemForm.invalid) return;
-
-    // console.log(this.searchItemForm.controls['category'].value);
-
-    // let itemList: number[] = [];
-    // this.searchItemForm.controls['category'].value.forEach((str: string) => {
-    //   itemList.push(this.categoryList.indexOf(str) + 1);
-    // });
-
-    // this.marketService.getItem(this.searchItemForm.controls['item_id'].value, itemList)
-    // .subscribe(data => this.itemList = data);
-    console.log('a');
+  searchItem($event: any): void {
+    this.itemList = [];
+    this.marketService.getItems($event.item_id, $event.tier, $event.enchant)
+    .subscribe(data => data.forEach(item => this.insertItem(item)));
   }
 
   _searchItem(str: string, int: number[]): void {

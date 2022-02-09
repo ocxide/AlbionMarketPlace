@@ -1,4 +1,4 @@
-[
+const itemList = [
     {
         "item_id": "UNIQUE_HIDEOUT",
         "item_name": "Hideout Construction Kit"
@@ -31895,4 +31895,6 @@
         "item_id": "T8_JOURNAL_FISHING_FULL",
         "item_name": "Elder Fisherman's Journal (Full)"
     }
-]
+];
+
+export default itemList;
