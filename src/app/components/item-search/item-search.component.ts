@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ItemListService } from 'src/app/services/item-list.service';
@@ -10,6 +10,8 @@ import { Observable, debounceTime, startWith, map } from 'rxjs';
   styleUrls: ['./item-search.component.scss']
 })
 export class ItemSearchComponent implements OnInit {
+
+  @Input() isMultiple!: boolean;
 
   tierList: string[] = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'];
   enchantList: string[] = ['@0', '@1', '@2', '@3'];

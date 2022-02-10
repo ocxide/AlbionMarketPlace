@@ -40,10 +40,6 @@ export class MarketComponent implements OnInit {
 
   ngOnInit(): void {
     this.windowSize = this.detectWindowSize();
-
-    //this.searchItem();
-    //this._searchItem('BAG', [4, 5]);
-    
   }
 
   @HostListener('window:resize', ['$event'])
@@ -61,14 +57,6 @@ export class MarketComponent implements OnInit {
     this.itemList = [];
     this.marketService.getItems($event.item_id, $event.tier, $event.enchant)
     .subscribe(data => data.forEach(item => this.insertItem(item)));
-  }
-
-  _searchItem(str: string, int: number[]): void {
-    this.marketService.getItem(str, int).subscribe(data => {
-      data.forEach((itemQ: ItemQueryI) => {
-        this.insertItem(itemQ);
-      });
-    });
   }
 
   private insertItem(itemQ: ItemQueryI) {

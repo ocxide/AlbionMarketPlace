@@ -9,10 +9,17 @@
   $primary-palette: map.get($color-config, 'primary');
   $is-dark-theme:   map.get($color-config, 'is-dark');
 
-  nav {
+  header {
       background-color: mat.get-color-from-palette($primary-palette);
       color: #fff;
+      h1 {
+        a {
+          color: #fff;
+        }
+      }
   }
+
+  nav ul li:hover { background-color: mat.get-color-from-palette($primary-palette, A700); }
 }
 
 @mixin theme($theme) {

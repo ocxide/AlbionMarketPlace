@@ -1,4 +1,16 @@
-<nav>
-  <h1>AlbionMarket Online Web</h1>
+<header>
+  <h1>
+    <a [routerLink]="['/']">
+      AlbionMarket Online Web
+    </a>
+  </h1>
+</header>
+<nav mat-tab-nav-bar>
+  <a mat-tab-link *ngFor="let link of links"
+     [active]="activeLink.url == link.url"
+     [routerLink]="[link.url]"> 
+     {{link.name}}
+  </a>
 </nav>
-<app-market></app-market>
+
+<router-outlet></router-outlet>
