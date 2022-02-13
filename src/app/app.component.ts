@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   links: { url:string, name: string }[] = [
     { url: '/search', name: 'Buscar' },
     { url: '/gold', name: 'Oro' },
-    { url: '/test', name: 'Test' }
   ];
   activeLink: typeof this.links[0] = this.links[0];
 

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MarketComponent } from './components/market/market.component';
 import { GoldMarketComponent } from './components/gold-market/gold-market.component';
-import { AnimationTestComponent } from './components/animation-test/animation-test.component';
 
 const routes: Routes = [
   {
@@ -19,10 +18,6 @@ const routes: Routes = [
     path: 'gold',
     component: GoldMarketComponent
   },
-  {
-    path: 'test',
-    component: AnimationTestComponent
-  }
 ];
 
 @NgModule({

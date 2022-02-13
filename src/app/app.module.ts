@@ -25,7 +25,6 @@ import { ItemTableComponent } from './components/item-table/item-table.component
 import { ItemSearchComponent } from './components/item-search/item-search.component';
 import { GoldMarketComponent } from './components/gold-market/gold-market.component';
 import { ToDatePipe } from './pipes/to-date.pipe';
-import { AnimationTestComponent } from './components/animation-test/animation-test.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +36,6 @@ import { AnimationTestComponent } from './components/animation-test/animation-te
     ItemSearchComponent,
     GoldMarketComponent,
     ToDatePipe,
-    AnimationTestComponent
   ],
   imports: [
     BrowserModule,
