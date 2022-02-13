@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # Mis cosas
-./cosas/*
+/cosas
