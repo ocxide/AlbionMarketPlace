@@ -28,4 +28,8 @@ npm install
 y haz un deploy con: 
 ```
 ng serve --open
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 669f73d (buggs resolved)
