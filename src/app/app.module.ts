@@ -14,13 +14,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { MarketComponent } from './components/market/market.component';
-import { CompareItemsComponent } from './components/compare-items/compare-items.component';
 import { QualitifyPipe } from './pipes/qualitify.pipe';
 import { CoinPipe } from './pipes/coin.pipe';
 import { ItemTableComponent } from './components/item-table/item-table.component';
 import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { GoldMarketComponent } from './components/gold-market/gold-market.component';
+import { ToDatePipe } from './pipes/to-date.pipe';
+import { AnimationTestComponent } from './components/animation-test/animation-test.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,9 @@ import { ItemSearchComponent } from './components/item-search/item-search.compon
     CoinPipe,
     ItemTableComponent,
     ItemSearchComponent,
-    CompareItemsComponent
+    GoldMarketComponent,
+    ToDatePipe,
+    AnimationTestComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +51,9 @@ import { ItemSearchComponent } from './components/item-search/item-search.compon
     MatIconModule,
     MatAutocompleteModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

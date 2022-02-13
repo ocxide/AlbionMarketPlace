@@ -1,85 +1,90 @@
-<div class="item-table-header">
+<div class="item-table-header" (click)="collapsed = !collapsed">
   <h3> {{ item.item_id }} </h3>
-  <img src="https://render.albiononline.com/v1/item/{{item.item_id}}.png" alt="">
+  <div class="d-flex">
+    <img src="https://render.albiononline.com/v1/item/{{item.item_id}}.png" alt="">
+    <button mat-mini-fab color="accent" (click)="collapsed = !collapsed">
+      <mat-icon>eject</mat-icon>
+    </button>       
+  </div>
 </div>
 <hr>
+<div [@collapse]="collapsed ? 'open':'closed' " style="overflow: hidden; display: none;" class="table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th [attr.colspan]="qualityList.length*2">Precios de venta</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th colspan="2" *ngFor="let quality of qualityList">{{  quality | qualitify }}</th>
+      </tr>
+      <tr>
+        <th><div class="center">City</div></th>
+        <ng-container *ngFor="let quality of qualityList">
+          <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality, 1)? 'd-none':''">
+            <button mat-button isRoundButton="false" (click)="selectColumn(0, quality, 2)">+</button>
+          </th>
+          <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality, 2)? 'd-none':''">
+            <button mat-button (click)="selectColumn(0, quality, 1)">-</button>
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of item.cities">
+        <td>{{ city.city }}</td>
+        <ng-container *ngFor="let quality of city.qualities">
+          <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality.quality, 1)? 'd-none':''">
+            <p>{{ quality.sell_price_max | coin }}</p>
+            <p>{{ quality.sell_price_max_date | date }}</p>
+          </td>
+          <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality.quality, 2)? 'd-none':''">
+            <p>{{ quality.sell_price_min | coin }}</p>
+            <p>{{ quality.sell_price_min_date | date }}</p>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th [attr.colspan]="qualityList.length*2">Precios de venta</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th colspan="2" *ngFor="let quality of qualityList">{{  quality | qualitify }}</th>
-    </tr>
-    <tr>
-      <th>City</th>
-      <ng-container *ngFor="let quality of qualityList">
-        <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality, 1)? 'd-none':''">
-          <button mat-button (click)="selectColumn(0, quality, 2)">+</button>
-        </th>
-        <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality, 2)? 'd-none':''">
-          <button mat-button (click)="selectColumn(0, quality, 1)">-</button>
-        </th>
-      </ng-container>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let city of item.cities">
-      <td>{{ city.city }}</td>
-      <ng-container *ngFor="let quality of city.qualities">
-        <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality.quality, 1)? 'd-none':''">
-          <p>{{ quality.sell_price_max | coin }}</p>
-          <p>{{ quality.sell_price_max_date | date }}</p>
-        </td>
-        <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(0, quality.quality, 2)? 'd-none':''">
-          <p>{{ quality.sell_price_min | coin }}</p>
-          <p>{{ quality.sell_price_min_date | date }}</p>
-        </td>
-      </ng-container>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th [attr.colspan]="qualityList.length*2">Precios de compra</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th colspan="2" *ngFor="let quality of qualityList">{{  quality | qualitify }}</th>
-    </tr>
-    <tr>
-      <th>City</th>
-      <ng-container *ngFor="let quality of qualityList">
-        <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality, 1)? 'd-none':''">
-          <button mat-button (click)="selectColumn(1, quality, 2)">+</button>
-        </th>
-        <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality, 2)? 'd-none':''">
-          <button mat-button (click)="selectColumn(1, quality, 1)">-</button>
-        </th>
-      </ng-container>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let city of item.cities">
-      <td>{{ city.city }}</td>
-      <ng-container *ngFor="let quality of city.qualities">
-        <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality.quality, 1)? 'd-none':''">
-          <p>{{ quality.buy_price_max | coin }}</p>
-          <p>{{ quality.buy_price_max_date | date }}</p>
-        </td>
-        <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality.quality, 2)? 'd-none':''">
-          <p>{{ quality.buy_price_min | coin }}</p>
-          <p>{{ quality.buy_price_min_date | date }}</p>
-        </td>
-      </ng-container>
-    </tr>
-  </tbody>
-</table>
-
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th [attr.colspan]="qualityList.length*2">Precios de compra</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th colspan="2" *ngFor="let quality of qualityList">{{  quality | qualitify }}</th>
+      </tr>
+      <tr>
+        <th>City</th>
+        <ng-container *ngFor="let quality of qualityList">
+          <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality, 1)? 'd-none':''">
+            <button mat-button (click)="selectColumn(1, quality, 2)">+</button>
+          </th>
+          <th [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality, 2)? 'd-none':''">
+            <button mat-button (click)="selectColumn(1, quality, 1)">-</button>
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of item.cities">
+        <td>{{ city.city }}</td>
+        <ng-container *ngFor="let quality of city.qualities">
+          <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality.quality, 1)? 'd-none':''">
+            <p>{{ quality.buy_price_max | coin }}</p>
+            <p>{{ quality.buy_price_max_date | date }}</p>
+          </td>
+          <td [attr.colspan]="groupSize" [ngClass]="isHiddenColumn(1, quality.quality, 2)? 'd-none':''">
+            <p>{{ quality.buy_price_min | coin }}</p>
+            <p>{{ quality.buy_price_min_date | date }}</p>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <hr>

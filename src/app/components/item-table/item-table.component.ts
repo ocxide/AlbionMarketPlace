@@ -1,10 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { trigger, state, transition, style, animate } from '@angular/animations';
+
 import { ItemI } from 'src/app/interfaces/item-show-i';
 
 @Component({
   selector: 'item-table',
   templateUrl: './item-table.component.html',
-  styleUrls: ['./item-table.component.scss']
+  styleUrls: ['./item-table.component.scss'],
+  animations: [
+    trigger('collapse', [
+      state('open', style({ height: '*', display: 'block' }) ),
+      state('closed', style({ height: '0', display: 'none'}) ),
+      transition('closed => open', [
+        style({display: 'block'}),
+        animate('200ms')
+      ]),
+      transition('* => closed', [ animate('400ms') ])
+    ])
+  ]
 })
 export class ItemTableComponent implements OnInit {
 
@@ -22,8 +35,9 @@ export class ItemTableComponent implements OnInit {
   ];
   
   groupSize!: number;
-
   isSmScreen!:boolean;
+
+  collapsed: boolean = false;
 
   constructor() { }
 

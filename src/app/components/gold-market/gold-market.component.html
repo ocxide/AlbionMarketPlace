@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="button-container">
+        <form (ngSubmit)="submit()" [formGroup]="range">
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                  <input matStartDate formControlName="start" placeholder="Start date">
+                  <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+
+            <button type="submit" mat-button>Buscar</button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <div 
+        class="circle" 
+        *ngFor="let point of pointsToRenderDouble"
+        (mouseenter)="moveMainLabel(point, pointsToRenderDouble.indexOf(point))"
+        (mouseleave)="disappearLabel()"
+        style="cursor: pointer; position: absolute; top: {{ point.y.toString() + 'px' }}; left: {{ (point.x - 2.5).toString() + 'px' }};" 
+        #circle>
+        </div>
+        <svg #graphContainer id="id" (mouseleave)="inside = false">
+            <defs>
+                <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="green"/>
+                    <stop offset="100%" stop-color="black" stop-opacity="0"/>
+                </linearGradient>
+            </defs>
+            <polygon [attr.points]="pointsToRender" fill="url(#Gradient2)"/>
+            <polygon [attr.points]="linePoints" fill="black" [class]=" !inside? 'd-none': '' "/>
+        </svg>
+        <div class="label" #mainLabel style="position: absolute; display:none;"> 
+            <p>Precio: {{ currentPointV.price }}</p>
+            <p>Date: {{ currentPointV.timestamp | toDate }}</p>
+        </div>
+        <div class="label" style="position: absolute;" [ngStyle]="labelPosition" [class]="!inside? 'd-none': '' "> 
+            <p>Expectec: {{ expectedPointV.price }}</p>
+            <p>Date: {{ expectedPointV.timestamp | toDate }}</p>
+        </div>
+        <div class="spinner-container" style="position: absolute; width: 100%; height:100%; top:0; background: #fff; cursor: pointer" *ngIf="(!graphLoaded) && clicked">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>

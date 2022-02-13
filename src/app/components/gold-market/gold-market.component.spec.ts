@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompareItemsComponent } from './compare-items.component';
+import { GoldMarketComponent } from './gold-market.component';
 
-describe('CompareItemsComponent', () => {
-  let component: CompareItemsComponent;
-  let fixture: ComponentFixture<CompareItemsComponent>;
+describe('GoldMarketComponent', () => {
+  let component: GoldMarketComponent;
+  let fixture: ComponentFixture<GoldMarketComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CompareItemsComponent ]
+      declarations: [ GoldMarketComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompareItemsComponent);
+    fixture = TestBed.createComponent(GoldMarketComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CompareItemsComponent } from './components/compare-items/compare-items.component';
 
 import { MarketComponent } from './components/market/market.component';
+import { GoldMarketComponent } from './components/gold-market/gold-market.component';
+import { AnimationTestComponent } from './components/animation-test/animation-test.component';
 
 const routes: Routes = [
   {
@@ -15,8 +16,12 @@ const routes: Routes = [
     component: MarketComponent
   },
   {
-    path: 'compare',
-    component: CompareItemsComponent
+    path: 'gold',
+    component: GoldMarketComponent
+  },
+  {
+    path: 'test',
+    component: AnimationTestComponent
   }
 ];
 

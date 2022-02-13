@@ -1,26 +1,28 @@
 table {
     width: 100%;
-}
-
-tr {
-    box-shadow: 0  1.5px #000 ;
+    margin-bottom: 20px;
 }
 
 td, th {
     min-width: 40px;
+    padding: 0;
     text-align: center;
 }
 
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 36px;
+}
+
 td {
+    text-align: left;
     padding: 2px;
 }
 
 p { margin: 0; padding: 0; }
-
-p.text-center {
-    margin: 0;
-    padding: 4px;
-}
 
 .separe-vertical {
     display: flex;
@@ -38,8 +40,12 @@ p.text-center {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-
+    cursor: pointer;
     padding: 10px;
+
+    &hover {
+        background-color: rgb(3, 3, 3);
+    }
 
     h3 {
         padding: 0;
@@ -64,4 +70,17 @@ hr {
     width: 100%;
     padding: 0;
     margin: 0;
+}
+
+.table-container {
+    padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .table-container {
+        padding: 0 200px;
+    }
+    td {
+        text-align: center;
+    }
 }

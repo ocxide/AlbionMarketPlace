@@ -11,9 +11,10 @@ export class AppComponent implements OnInit {
 
   links: { url:string, name: string }[] = [
     { url: '/search', name: 'Buscar' },
-    { url: '/compare', name: 'Comparar' }
+    { url: '/gold', name: 'Oro' },
+    { url: '/test', name: 'Test' }
   ];
-  activeLink = this.links[0];
+  activeLink: typeof this.links[0] = this.links[0];
 
   constructor(
     private location: Location
