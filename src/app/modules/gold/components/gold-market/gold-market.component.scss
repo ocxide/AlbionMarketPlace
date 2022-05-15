@@ -1,0 +1,40 @@
+.button-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.svg-container {
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+form {
+    margin-top: 10px;
+    >.field-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        gap: 20px;
+
+        >.field {
+            
+           p.error {
+            color: #d30d0d;
+            word-break: break-all;
+            }
+    }
+    }
+    .btn-cont {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}

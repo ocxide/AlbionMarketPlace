@@ -1,0 +1,39 @@
+:host {
+    position: absolute;
+    top: 0;
+}
+
+.point {
+    position: absolute;
+    background-color: #f5ad27;
+    width: 6px;
+    aspect-ratio: 1;
+    border-radius: 50px;
+}
+
+.label {
+    position: absolute;
+    border-radius: 10px;
+    width: 160px;
+    aspect-ratio: 3/1;
+
+    background-color: #fff;
+
+    $shadow: 2px 2px 3px 1px rgb(0 0 0 / 47%);
+    box-shadow: $shadow;
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+
+    padding: 4px;
+
+    top: 0;
+    
+    >* {
+        display: block;
+        width: 100%;
+    }
+
+    >p {
+        margin: 0;
+    }
+}

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MarketComponent } from './components/market/market.component';
-import { GoldMarketComponent } from './components/gold-market/gold-market.component';
-
 const routes: Routes = [
   {
     path: '',
@@ -12,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'search',
-    component: MarketComponent
+    loadChildren: () => import("./modules/search/search.module").then(m => m.SearchModule)
   },
   {
     path: 'gold',
-    component: GoldMarketComponent
+    loadChildren: () => import("./modules/gold/gold.module").then(m => m.GoldModule)
   },
 ];
 

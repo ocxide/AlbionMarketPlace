@@ -1,8 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren, HostListener } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { MarketService } from 'src/app/services/market.service';
-import { ItemI } from 'src/app/interfaces/item-show-i';
+import { MarketService } from 'src/app/modules/search/services/market.service';
+import { ItemI } from 'src/app/modules/search/interfaces/item-show-i';
 import { ItemTableComponent } from '../item-table/item-table.component';
 
 @Component({
@@ -12,7 +11,7 @@ import { ItemTableComponent } from '../item-table/item-table.component';
 })
 export class MarketComponent implements OnInit {
 
-  items!: Observable<ItemI[]>;
+  items!: ItemI[];
 
   windowSizes = {
     "sm": 500,
@@ -33,9 +32,9 @@ export class MarketComponent implements OnInit {
   }
 
   detectWindowSize(): string {
-    return Object.entries(this.windowSizes).find((arr: [string, number]) => {
-      if (arr[1] === -1) return true;
-      return window.innerWidth <= arr[1];
+    return Object.entries(this.windowSizes).find( ([key, value]) => {
+      if (value === -1) return true;
+      return window.innerWidth <= value;
     })![0];
   }
 
@@ -46,19 +45,22 @@ export class MarketComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event:any): void {
     const currentSize:string = this.detectWindowSize();
-    if (this.windowSize != currentSize) {
-      this.windowSize = currentSize;
-      this.itemTableChildren.forEach(itemTable => 
-        itemTable.resize(this.windowSize)
-      )
-    }
+    if (this.windowSize === currentSize) return 
+    
+    this.windowSize = currentSize;
+    this.itemTableChildren.forEach(itemTable => itemTable.resize(this.windowSize));
   }
 
   searchItem($event: any): void {
     this.chargingData = true;
-    this.items = this.marketService.getItems($event.item_id, $event.tier, $event.enchant);
-    this.items.subscribe({
-      complete: ()=>{this.chargingData = false;}
+    
+    this.marketService.getItems($event.item_id, $event.tier, $event.enchant)
+    .subscribe({
+      next: v => { this.items = v; },
+      complete: () => {
+        this.chargingData = false;
+        this.itemTableChildren.changes.subscribe(() => this.itemTableChildren.first.openClose(true));
+      }
     });
   }
 

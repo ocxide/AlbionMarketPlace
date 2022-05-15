@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="button-container">
+        <form (ngSubmit)="submit()" [formGroup]="range">
+            <div class="field-container">
+                <div class="field">
+                    <input type="date" formControlName="start" name="start">
+                    <p class="error"
+                    *ngIf="range.controls['start'].invalid && range.controls['start'].touched"
+                    >Invalid date</p>
+                </div>
+                <div class="field">
+                    <input type="date" formControlName="end" name="end">
+                    <p class="error"
+                    *ngIf="range.controls['end'].invalid && range.controls['end'].touched"
+                    >Invalid date</p>
+                    <p class="error"
+                    *ngIf="range.errors && range.errors['samedate']"
+                    >Date too low</p>
+                </div>
+            </div>
+            <div class="btn-cont">
+                <button type="submit" mat-raised-button color="primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+    <div class="svg-container" style="position: relative;">
+        <app-graph [valuePoints]="valuePoints" (load)="load()"></app-graph>
+
+        <ng-container *ngIf="svgLoad">
+            <app-points [size]="10" [values]="valuePoints"></app-points>
+            <app-label [values]="valuePoints"></app-label>
+        </ng-container>
+    </div>
+</div>

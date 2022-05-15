@@ -1,0 +1,8 @@
+<div class="point"
+*ngFor="let p of points; let i = index" 
+[ngStyle]="{ 'top': p.y+'px', 'left': p.x+'px', 'width': size+'px' }"
+(mouseenter)="pointHover=true; setPointValue(i)"
+(mouseout)="pointHover=false;"
+></div>
+
+<value-point-label [value]="value" [point]="point" [display]="pointHover" [containerSize]="containerSize"></value-point-label>

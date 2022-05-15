@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { ItemListService } from 'src/app/services/item-list.service';
+import { ItemListService } from 'src/app/modules/search/services/item-list.service';
 import { Observable, debounceTime, startWith, map } from 'rxjs';
 
 @Component({

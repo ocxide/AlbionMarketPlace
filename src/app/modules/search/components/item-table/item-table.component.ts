@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 
-import { ItemI } from 'src/app/interfaces/item-show-i';
+import { ItemI } from 'src/app/modules/search/interfaces/item-show-i';
 
 @Component({
   selector: 'item-table',
@@ -66,6 +66,13 @@ export class ItemTableComponent implements OnInit {
         this.isSmScreen = false;
         break;
     }
+  }
+
+  openClose(mode: boolean | null = null) {
+    console.log("d");
+
+    if (mode === null) this.collapsed = !this.collapsed;
+    else this.collapsed = mode;
   }
 
 }
