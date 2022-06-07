@@ -6,9 +6,9 @@ export function toPoints(values: Value[], board: Point, minValue: Value, rangeVa
 
     values.forEach(value => {
         const rawPoint: Point = {
-            x: board.x*(value.timestamp - minValue.timestamp)/rangeValue.timestamp,
+            x: (board.x * ((value.timestamp - minValue.timestamp)/rangeValue.timestamp)),
             y: board.y * (1 - ((value.price - minValue.price)/rangeValue.price))
-        }
+          };
 
         points.push(rawPoint)
     })

@@ -40,7 +40,7 @@ export class GoldMarketComponent implements OnInit {
   }
 
   constructor(
-    private _http: HttpClient,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -53,16 +53,16 @@ export class GoldMarketComponent implements OnInit {
       new Date(this.range.controls['start'].value),
       new Date(this.range.controls['end'].value)
     )
-    .pipe(map(data => { 
-      return data.map(value => { 
-        return { price: value.price, timestamp: new Date(value.timestamp).getTime() };
-      })
-    }))
+    .pipe(
+      map(values => 
+        values.map(value => ({...value, timestamp: new Date(value.timestamp).getTime() }))
+      )
+    )
     .subscribe(data => this.valuePoints = data);
   }
 
   getGoldPrices(start: Date, end: Date) {
-    return this._http.get<DataPoint[]>('https://www.albion-online-data.com/api/v2/stats/gold?date='+start.toJSON()+'&end_date='+end.toJSON());
+    return this.http.get<DataPoint[]>(`https://www.albion-online-data.com/api/v2/stats/gold?date=${start.toJSON()}&end_date=${+end.toJSON()}`);
   }
 
   load() {

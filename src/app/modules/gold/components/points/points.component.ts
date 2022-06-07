@@ -39,9 +39,7 @@ export class PointsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.linkSev.changePoints
-    .pipe(map(points_ => {
-      return points_.slice(1, -1).map(p => { return { x: p.x-(this.size/2.5), y: p.y-(this.size/2.5) }; })
-    }))
+    .pipe(map(points => points.slice(1, -1).map(p => ({ x: p.x-(this.size/2.5), y: p.y-(this.size/2.5) }) ) ))
     .subscribe(points => this.points = points);
   }
 
