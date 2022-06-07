@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { Point } from '../../interfaces/point';
-import { PointValue } from '../../interfaces/point-value';
+import { Value } from '../../interfaces/value';
 import { ComunicationService } from '../../services/comunication.service';
 
 @Component({
@@ -12,10 +12,10 @@ import { ComunicationService } from '../../services/comunication.service';
 export class PointsComponent implements OnInit, AfterViewInit {
 
   @Input() size: number = 6;
-  @Input() values: PointValue[] = [];
+  @Input() values: Value[] = [];
 
   points: Point[] = [];
-  value: PointValue = {
+  value: Value = {
     price: 0,
     timestamp: 0
   }

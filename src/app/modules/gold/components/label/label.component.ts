@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Point } from '../../interfaces/point';
-import { PointValue } from '../../interfaces/point-value';
+import { Value } from '../../interfaces/value';
 import { ComunicationService } from '../../services/comunication.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class LabelComponent implements OnInit, OnDestroy {
   @ViewChild('cursor') cursorRef!: ElementRef;
 
   @Input() cursorWidth: number = 6;
-  @Input() values: PointValue[] = [];
+  @Input() values: Value[] = [];
   
   $unsuscriber: Subject<void> = new Subject();
 
@@ -24,7 +24,7 @@ export class LabelComponent implements OnInit, OnDestroy {
 
   inSvg: { value: boolean } = { value: false };
 
-  val: PointValue = {
+  val: Value = {
     price: 0,
     timestamp: 0
   };
@@ -86,7 +86,7 @@ export class LabelComponent implements OnInit, OnDestroy {
     return ((afterPoint!.y - beforePoint!.y)*(mousePos - beforePoint!.x)/(afterPoint!.x - beforePoint!.x)) + beforePoint!.y;
   } 
 
-  private toValue(point: Point): PointValue {
+  private toValue(point: Point): Value {
     const min = this.linkSev.minMaxValue[0];
     const range = this.linkSev.minMaxValue[1];
 

@@ -1,4 +1,4 @@
-export interface PointValue {
+export interface Value {
     price: number,
     timestamp: number
 }

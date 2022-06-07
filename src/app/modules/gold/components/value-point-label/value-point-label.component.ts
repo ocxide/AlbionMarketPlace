@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { Point } from '../../interfaces/point';
-import { PointValue } from '../../interfaces/point-value';
+import { Value } from '../../interfaces/value';
 
 @Component({
   selector: 'value-point-label[point][display][containerSize]',
@@ -12,7 +12,7 @@ import { PointValue } from '../../interfaces/point-value';
 })
 export class ValuePointLabelComponent implements OnInit, OnChanges {
 
-  @Input() value: PointValue = {
+  @Input() value: Value = {
     price: 0,
     timestamp: 0
   };

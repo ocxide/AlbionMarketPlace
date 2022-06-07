@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PointValue } from '../../interfaces/point-value';
+import { Value } from '../../interfaces/value';
 import { GraphComponent } from '../graph/graph.component';
 import { LabelComponent } from '../label/label.component';
 import { PointsComponent } from '../points/points.component';
@@ -28,7 +28,7 @@ export class GoldMarketComponent implements OnInit {
     validators: sameDateValidator('start', 'end')
   });
 
-  valuePoints: PointValue[] = [];
+  valuePoints: Value[] = [];
   messageError: string | null = null;
   svgLoad = false;
 

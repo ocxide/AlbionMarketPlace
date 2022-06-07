@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Point } from '../interfaces/point';
-import { PointValue } from '../interfaces/point-value';
+import { Value } from '../interfaces/value';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ComunicationService {
   svg!: SVGAElement;
 
   points: Point[] = [];
-  minMaxValue!: [PointValue, PointValue];
+  minMaxValue!: [Value, Value];
 
   insideSvg: { value: boolean } = { value: false };
 

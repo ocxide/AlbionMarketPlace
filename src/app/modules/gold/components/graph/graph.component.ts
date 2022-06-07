@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, AfterViewInit, OnChanges, ViewChild, ElementRef, SimpleChanges, HostListener, Host, Output, EventEmitter } from '@angular/core';
 import { debounceTime, fromEvent, min, pairwise } from 'rxjs';
 import { Point } from '../../interfaces/point';
-import { PointValue } from '../../interfaces/point-value';
+import { Value } from '../../interfaces/value';
 import { ComunicationService } from '../../services/comunication.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { ComunicationService } from '../../services/comunication.service';
 })
 export class GraphComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() valuePoints: PointValue[] = [];
+  @Input() valuePoints: Value[] = [];
   @Output("load") loadEmitter: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('graph') graph!: ElementRef;
@@ -103,7 +103,7 @@ export class GraphComponent implements OnInit, OnChanges, AfterViewInit {
   }
 }
 
-function toPoint(pointValue: PointValue, minValue: PointValue, valueRange: PointValue, size: Point): Point {
+function toPoint(pointValue: Value, minValue: Value, valueRange: Value, size: Point): Point {
   return {
     x: (size.x * ((pointValue.timestamp - minValue.timestamp)/valueRange.timestamp)),
     y: size.y * (1 - ((pointValue.price - minValue.price)/valueRange.price))
