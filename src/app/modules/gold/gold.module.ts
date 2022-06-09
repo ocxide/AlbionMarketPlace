@@ -18,7 +18,7 @@ import { ToDatePipe } from './pipes/to-date.pipe';
 import { GoldMarketComponent } from './components/gold-market/gold-market.component';
 import { GraphComponent } from './components/graph/graph.component';
 import { LabelAndPointsComponent } from './components/label-and-points/label-and-points.component';
-import { LabelComponent } from './components/label/value-point-label.component';
+import { LabelComponent } from './components/label/label.component';
 import { PointsComponent } from './components/points/points.component';
 
 @NgModule({

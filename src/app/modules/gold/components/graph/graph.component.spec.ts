@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CenterPointPipe } from '../../pipes/center-point.pipe';
 
 import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
-import { LabelComponent } from '../label/value-point-label.component';
+import { LabelComponent } from '../label/label.component';
 import { PointsComponent } from '../points/points.component';
 
 import { GraphComponent } from './graph.component';
