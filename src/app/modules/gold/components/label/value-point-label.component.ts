@@ -4,11 +4,11 @@ import { Value } from '../../interfaces/value';
 
 @Component({
   selector: 'value-point-label[point][display][containerSize]',
-  templateUrl: './value-point-label.component.html',
+  templateUrl: './label.component.html',
   host: {
     "[style.display]": "display ? 'inline-block' : 'none'"
   },
-  styleUrls: ['./value-point-label.component.scss']
+  styleUrls: ['./label.component.scss']
 })
 export class LabelComponent implements OnInit, OnChanges {
 
