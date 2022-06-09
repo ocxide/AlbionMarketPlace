@@ -28,8 +28,7 @@ export class ItemSearchComponent implements OnInit {
   filItems!: Observable<{ item_id: string, item_name: string }[]>;
   
   @Output('itemSubmit') 
-  itemEmitter: EventEmitter<{ item_name: string, tier: string[], enchant: string[]}> 
-  = new EventEmitter<{ item_name: string, tier: string[], enchant: string[]}>();
+  itemEmitter = new EventEmitter<{ item_name: string, tier: string[], enchant: string[]}>();
 
   constructor(private itemListService: ItemListService) { }
 

@@ -4,18 +4,29 @@
             <div class="field-container">
                 <div class="field">
                     <input type="date" formControlName="start" name="start">
-                    <p class="error"
+                    <!-- <p class="error"
                     *ngIf="range.controls['start'].invalid && range.controls['start'].touched"
-                    >Invalid date</p>
+                    >Invalid date</p> -->
+                    
+                    <ng-container *ngIf="range.controls['start'].touched && range.controls['start']['errors']">
+                        <ng-container *ngFor="let error of messageErrors['start'] | keyvalue">
+                            <p class="error" *ngIf="range.controls['start']['errors'][error.key]">{{ error.value }}</p> 
+                        </ng-container>
+                    </ng-container>
                 </div>
                 <div class="field">
                     <input type="date" formControlName="end" name="end">
-                    <p class="error"
-                    *ngIf="range.controls['end'].invalid && range.controls['end'].touched"
-                    >Invalid date</p>
-                    <p class="error"
-                    *ngIf="range.errors && range.errors['samedate']"
-                    >Date too low</p>
+                    <ng-container *ngIf="range.controls['end'].touched && range.controls['end']['errors']">
+                        <ng-container *ngFor="let error of messageErrors['end'] | keyvalue">
+                            <p class="error" *ngIf="range.controls['end']['errors'][error.key]">{{ error.value }}</p> 
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="range.touched && range['errors']">
+                        <ng-container *ngFor="let error of messageErrors['range'] | keyvalue">
+                            <p class="error" *ngIf="range['errors'][error.key]">{{ error.value }}</p> 
+                        </ng-container>
+                    </ng-container>
                 </div>
             </div>
             <div class="btn-cont">
@@ -26,6 +37,10 @@
     <div class="svg-container card" style="position: relative;">
         <ng-container *ngIf="valuePoints">
             <app-graph [values]="valuePoints"></app-graph>
-        </ng-container>      
+        </ng-container>
+
+        <ng-template *ngIf="loadingData">
+            <p style="position: absolute;">Loading...</p>
+        </ng-template>
     </div>
 </div>

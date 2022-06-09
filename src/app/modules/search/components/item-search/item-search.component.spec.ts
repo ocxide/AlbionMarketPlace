@@ -1,5 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CommonModule } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItemListService } from '../../services/item-list.service';
+
 import { ItemSearchComponent } from './item-search.component';
 
 describe('ItemSearchComponent', () => {
@@ -8,7 +21,23 @@ describe('ItemSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ItemSearchComponent ]
+      declarations: [
+        ItemSearchComponent,
+      ],
+      imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatProgressSpinnerModule,
+        HttpClientTestingModule,
+        BrowserAnimationsModule
+      ],
+      providers: [
+        ItemListService
+      ]
     })
     .compileComponents();
   });
@@ -22,4 +51,5 @@ describe('ItemSearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

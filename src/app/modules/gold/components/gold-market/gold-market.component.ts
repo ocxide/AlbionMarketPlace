@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 
@@ -8,6 +8,8 @@ import { GraphComponent } from '../graph/graph.component';
 import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
 import { PointsComponent } from '../points/points.component';
 import { sameDateValidator } from '../../validators/same-date.validators';
+
+type control<F extends FormGroup> = keyof F['controls']
 
 @Component({
   selector: 'app-gold-market',
@@ -28,10 +30,25 @@ export class GoldMarketComponent implements OnInit {
     validators: sameDateValidator('start', 'end')
   });
 
-  valuePoints?: Value[];
-  messageError: string | null = null;
-  svgLoad = false;
+  messageErrors: { 
+    [key: string]: { [key: string]: string } 
+  } = {
+    'start': {
+      'required': 'Date Required',
+      'invalid': 'Date invalid'
+    },
+    'end': {
+      'required': 'Date Required',
+      'invalid': 'Date invalid'
+    },
+    'range': {
+      'samedate': 'Date too low!'
+    }
+  }
 
+  valuePoints?: Value[];
+  loadingData: Boolean = false
+  
   constructor(
     private http: HttpClient,
   ) { }
@@ -39,8 +56,11 @@ export class GoldMarketComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
   submit() {
     if (this.range.invalid) return;
+
+    this.loadingData = true
 
     this.getGoldPrices(
       new Date(this.range.controls['start'].value),
@@ -51,15 +71,14 @@ export class GoldMarketComponent implements OnInit {
         values.map(value => ({...value, timestamp: new Date(value.timestamp).getTime() }))
       )
     )
-    .subscribe(data => this.valuePoints = data);
+    .subscribe({
+      next: data => this.valuePoints = data,
+      complete: () => this.loadingData = false
+    });
   }
 
   getGoldPrices(start: Date, end: Date) {
     return this.http.get<DataPoint[]>(`https://www.albion-online-data.com/api/v2/stats/gold?date=${start.toJSON()}&end_date=${end.toJSON()}`);
-  }
-
-  load() {
-    this.svgLoad = true;
   }
 }
 

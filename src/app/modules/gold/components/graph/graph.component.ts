@@ -1,4 +1,9 @@
-import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
+import { 
+  Component, Input, OnInit, AfterViewInit, 
+  ViewChild, ElementRef, ChangeDetectorRef, 
+  HostListener, OnChanges 
+} from '@angular/core';
+
 import { Point } from '../../interfaces/point';
 import { Value } from '../../interfaces/value';
 import { toPoints } from './calc';
@@ -8,7 +13,7 @@ import { toPoints } from './calc';
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() values!: Value[];
 
@@ -23,6 +28,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
   display: boolean = false
 
   constructor(private cd: ChangeDetectorRef) { }
+
+  ngOnChanges() {
+    this.ngOnChanges = () => this.render()
+  }
 
   ngOnInit(): void {
     if (!this.values) throw new TypeError('values Input is required')
