@@ -1,117 +1,85 @@
-import { Component, Input, OnInit, AfterViewInit, OnChanges, ViewChild, ElementRef, SimpleChanges, HostListener, Host, Output, EventEmitter } from '@angular/core';
-import { debounceTime, fromEvent, min, pairwise } from 'rxjs';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { Point } from '../../interfaces/point';
 import { Value } from '../../interfaces/value';
-import { ComunicationService } from '../../services/comunication.service';
+import { toPoints } from './calc';
 
 @Component({
-  selector: 'app-graph[valuePoints]',
+  selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent implements OnInit, OnChanges, AfterViewInit {
+export class GraphComponent implements OnInit, AfterViewInit {
 
-  @Input() valuePoints: Value[] = [];
-  @Output("load") loadEmitter: EventEmitter<boolean> = new EventEmitter();
+  @Input() values!: Value[];
 
   @ViewChild('graph') graph!: ElementRef;
 
-  pointsRender: number[] = [];
+  svgSize?: Point
+  
+  pointsRender?: number[];
+  points?: Point[]
+  minRangeValue?: [ Value, Value ]
 
-  handler: Function = () => {};
-  loaded: boolean = false;
+  display: boolean = false
 
-  constructor(
-    private com: ComunicationService
-  ) { }
+  constructor(private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.ngOnChanges = 
-    (changes: SimpleChanges) => { 
-      this.loaded = true;
-      this.handler = this.render;
-      this.handler();
-      this.registerEvents();
-      this.ngOnChanges = (changes: SimpleChanges) => { this.handler(); } 
-    }
+    if (!this.values) throw new TypeError('values Input is required')
   }
 
   ngAfterViewInit(): void {
-    setTimeout(()=>{
-      if (this.graph) {
-        this.com.svg = this.graph.nativeElement;
-        this.loadEmitter.emit(true);  
-      } else console.log("svg not loaded")
-    }, 0);
+    const svg = (this.graph.nativeElement as SVGAElement)
+
+    const boardSize = svg.getBoundingClientRect()
+    this.svgSize = { x: boardSize.width, y: boardSize.height }
+    this.render()
+
+    this.cd.detectChanges()
   }
 
-  reLoad() {
-    this.handler();
+  private chekedCalculatePoints(values: Value[], board: Point): [ Point[], [ Value, Value ] ] {
+    if (values.length < 1) throw new Error('Cannot calculate points with less than 1 point')
+    
+    values = values.sort((a, b) => a.timestamp - b.timestamp)
+
+    const minValue: Value = { 
+        price: values.reduce((prev, next) => prev.price < next.price ? prev : next).price, 
+        timestamp: values[0].timestamp 
+    }
+
+    const rangeValue: Value = {
+        timestamp: values[values.length-1].timestamp - values[0].timestamp,
+        price: (
+            values.reduce((prev, next)=> prev.price > next.price ? prev : next).price - 
+            minValue.price
+        )
+    }
+
+    return [ 
+      toPoints(values as [Value, ...Value[]], board, minValue, rangeValue), 
+      [ minValue, rangeValue ] 
+    ]
+  }
+
+  private updateSvgSize() {
+    const boardSize = this.graph.nativeElement.getBoundingClientRect()
+    this.svgSize = { x: boardSize.width, y: boardSize.height }
+  }
+
+  @HostListener('window:resize')
+  reRender() {
+    this.updateSvgSize()
+
+    this.points = toPoints(this.values as [Value, ...Value[]], this.svgSize!, ...this.minRangeValue!)
+    this.pointsRender = this.points.reduce((acc, next) => [...acc, next.x, next.y], [] as number[])
   }
 
   private render() {
-    if (this.valuePoints.length < 2) throw new Error("Cannot render with less than 2 points");
+    const [ points, minRange ] = this.chekedCalculatePoints(this.values, this.svgSize!)
 
-    const svg = this.graph.nativeElement as SVGAElement;
-    const first = this.valuePoints[0];
-    const last = this.valuePoints[this.valuePoints.length - 1];
-
-    const minPrice = this.valuePoints.reduce((prev, next) => prev.price > next.price ? next : prev).price;
-    const maxPrice = this.valuePoints.reduce((prev, next) => prev.price < next.price ? next : prev).price;
-
-    const timeDistance = last.timestamp - first.timestamp;
-    const priceRange = maxPrice - minPrice;
-    
-    //Write Point
-    const points: Point[] = [];
-    points.push({ x: 0, y: svg.clientHeight });
-    for(let valueP of this.valuePoints) 
-      points.push(toPoint(
-        valueP,
-        { price: minPrice, timestamp: first.timestamp },
-        { price: priceRange, timestamp: timeDistance }, 
-        { x: svg.clientWidth, y: svg.clientHeight }
-        ));
-    points.push({ x: svg.clientWidth, y: svg.clientHeight });
-
-    this.pointsRender = toNumberArray(points);
-
-    //Update data
-    this.com.changePoints.next(points);
-    this.com.points = points;
-    this.com.minMaxValue = [
-      { price: minPrice, timestamp: this.valuePoints[0].timestamp },
-      { price: priceRange, timestamp: timeDistance }
-    ];
+    this.minRangeValue = minRange
+    this.points = points
+    this.pointsRender = points.reduce((acc, next) => [...acc, next.x, next.y], [] as number[])
   }
-
-  registerEvents() {
-    fromEvent<MouseEvent>(this.graph.nativeElement, 'mousemove')
-    .subscribe(s => this.com.onMove.next(s));
-  }
-
-  mouseEnterAndLeave(inside: boolean) {
-    
-    if (this.loaded) {
-      this.mouseEnterAndLeave = (inside: boolean) => this.com.insideSvg.value = inside;
-      this.mouseEnterAndLeave(inside);
-    }
-      
-  }
-}
-
-function toPoint(pointValue: Value, minValue: Value, valueRange: Value, size: Point): Point {
-  return {
-    x: (size.x * ((pointValue.timestamp - minValue.timestamp)/valueRange.timestamp)),
-    y: size.y * (1 - ((pointValue.price - minValue.price)/valueRange.price))
-  };
-}
-
-function toNumberArray(points: Point[]): number[] {
-  const res: number[] = [];
-  for(let point of points) res.push(point.x, point.y);
-  return res;
 }

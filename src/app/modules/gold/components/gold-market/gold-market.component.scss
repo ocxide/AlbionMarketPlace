@@ -13,6 +13,10 @@
 .svg-container {
     margin-top: 20px;
     overflow: hidden;
+
+    &.card {
+        height: 400px;
+    }
 }
 
 form {

@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Value } from '../../interfaces/value';
 import { GraphComponent } from '../graph/graph.component';
-import { LabelComponent } from '../label/label.component';
+import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
 import { PointsComponent } from '../points/points.component';
 import { sameDateValidator } from '../../validators/same-date.validators';
 
@@ -17,7 +17,7 @@ import { sameDateValidator } from '../../validators/same-date.validators';
 export class GoldMarketComponent implements OnInit {
 
   @ViewChild(GraphComponent) graphComponent!: GraphComponent;
-  @ViewChild(LabelComponent) labelComponent!: LabelComponent;
+  @ViewChild(LabelAndPointsComponent) labelComponent!: LabelAndPointsComponent;
   @ViewChild(PointsComponent) pointsComponent!: PointsComponent;
 
   range = new FormGroup({
@@ -28,16 +28,9 @@ export class GoldMarketComponent implements OnInit {
     validators: sameDateValidator('start', 'end')
   });
 
-  valuePoints: Value[] = [];
+  valuePoints?: Value[];
   messageError: string | null = null;
   svgLoad = false;
-
-  @HostListener('window:resize') 
-  private onResize() {
-    this.graphComponent.reLoad();
-    this.labelComponent.reload();
-    this.pointsComponent.reload();
-  }
 
   constructor(
     private http: HttpClient,
@@ -62,7 +55,7 @@ export class GoldMarketComponent implements OnInit {
   }
 
   getGoldPrices(start: Date, end: Date) {
-    return this.http.get<DataPoint[]>(`https://www.albion-online-data.com/api/v2/stats/gold?date=${start.toJSON()}&end_date=${+end.toJSON()}`);
+    return this.http.get<DataPoint[]>(`https://www.albion-online-data.com/api/v2/stats/gold?date=${start.toJSON()}&end_date=${end.toJSON()}`);
   }
 
   load() {

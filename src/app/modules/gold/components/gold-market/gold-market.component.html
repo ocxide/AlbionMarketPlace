@@ -23,12 +23,9 @@
             </div>
         </form>
     </div>
-    <div class="svg-container" style="position: relative;">
-        <app-graph [valuePoints]="valuePoints" (load)="load()"></app-graph>
-
-        <ng-container *ngIf="svgLoad">
-            <app-points [size]="10" [values]="valuePoints"></app-points>
-            <app-label [values]="valuePoints"></app-label>
-        </ng-container>
+    <div class="svg-container card" style="position: relative;">
+        <ng-container *ngIf="valuePoints">
+            <app-graph [values]="valuePoints"></app-graph>
+        </ng-container>      
     </div>
 </div>

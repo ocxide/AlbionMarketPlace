@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LabelComponent } from './label.component';
+import { LabelAndPointsComponent } from './label-and-points.component';
 
 describe('LabelAndPointsComponent', () => {
-  let component: LabelComponent;
-  let fixture: ComponentFixture<LabelComponent>;
+  let component: LabelAndPointsComponent;
+  let fixture: ComponentFixture<LabelAndPointsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LabelComponent ]
+      declarations: [ LabelAndPointsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LabelComponent);
+    fixture = TestBed.createComponent(LabelAndPointsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

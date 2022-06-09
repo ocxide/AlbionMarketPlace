@@ -1,5 +1,10 @@
-<div class="card">
-    <svg #graph id="graph" (mouseenter)="mouseEnterAndLeave(true)" (mouseleave)="mouseEnterAndLeave(false)">
-        <polygon fill="gold" [attr.points]="pointsRender"/>
+<div class="svg-container">
+    <svg #graph>
+        <polygon fill="gold" [attr.points]="pointsRender" *ngIf="pointsRender"/>
     </svg>
+
+    <ng-container *ngIf="points && svgSize && minRangeValue">
+        <app-points [points]="points" [values]="values" [size]="7" [boardSize]="svgSize"></app-points>
+        <app-label [values]="values" [points]="points" [minRangeValue]="minRangeValue" [container]="graph"></app-label>
+    </ng-container>
 </div>

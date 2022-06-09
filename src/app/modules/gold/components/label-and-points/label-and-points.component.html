@@ -1,0 +1,8 @@
+<value-point-label [value]="val" [display]="display" [containerSize]="boardSize" [point]="point"></value-point-label>
+<div 
+    class="cursor" 
+    #cursor 
+    [style.display]="display ? 'inline-block': 'none'"
+    [ngStyle]="{ 'left': point.x+'px', 'top': point.y + 'px' }"
+    >
+</div>

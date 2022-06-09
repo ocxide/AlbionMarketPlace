@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ElementRef, HostListener } from '@angular/core';
 import { Point } from '../../interfaces/point';
 import { Value } from '../../interfaces/value';
 
@@ -10,7 +10,7 @@ import { Value } from '../../interfaces/value';
   },
   styleUrls: ['./value-point-label.component.scss']
 })
-export class ValuePointLabelComponent implements OnInit, OnChanges {
+export class LabelComponent implements OnInit, OnChanges {
 
   @Input() value: Value = {
     price: 0,
@@ -36,20 +36,19 @@ export class ValuePointLabelComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
+    if (!this.containerSize) throw new TypeError('containerSize Input is required')
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['point']) {
+      const label: HTMLElement = this.hostRef.nativeElement;
 
-    this.ngOnChanges = (changes: SimpleChanges) => {
-      if (changes['point'])
-      setTimeout(()=>{
-        const label: HTMLElement = this.hostRef.nativeElement;
-
-        label.style.left = this.getX(this.point.x, label.clientWidth, this.offset.x, this.containerSize.x) + 'px';
-        label.style.top = this.getY(this.point.y, label.clientHeight +this.offset.y, this.containerSize.y) + 'px';
-      }, 0);
+      label.style.left = this.getX(this.point.x, label.clientWidth, this.offset.x, this.containerSize.x) + 'px';
+      label.style.top = this.getY(this.point.y, label.clientHeight +this.offset.y, this.containerSize.y) + 'px';
     }
   }
+
+
 
   private getX(pos: number, size: number, offset: number, max: number) {
     size += offset;
