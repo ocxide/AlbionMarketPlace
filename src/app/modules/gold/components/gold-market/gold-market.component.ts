@@ -63,8 +63,8 @@ export class GoldMarketComponent implements OnInit {
     this.loadingData = true
 
     this.getGoldPrices(
-      new Date(this.range.controls['start'].value),
-      new Date(this.range.controls['end'].value)
+      new Date(this.range.value.start),
+      new Date(this.range.value.end)
     )
     .pipe(
       map(values => 
