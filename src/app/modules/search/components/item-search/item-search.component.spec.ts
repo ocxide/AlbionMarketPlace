@@ -45,9 +45,15 @@ describe('ItemSearchComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
+  
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('-> selectItemByHtmlElement should be prepared to recieve invalid html element', () => {
+    
+    const element = document.createElement('div')
+    expect(() => component.selectItemByHtmlElement(element)).toThrowError();
+  })
 
 });

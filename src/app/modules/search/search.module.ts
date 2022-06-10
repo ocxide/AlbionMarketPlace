@@ -16,6 +16,7 @@ import { ItemTableComponent } from './components/item-table/item-table.component
 import { QualitifyPipe } from './pipes/qualitify.pipe';
 import { MarketComponent } from './components/market/market.component';
 import { ItemSearchComponent } from './components/item-search/item-search.component';
+import { UtilsModule } from '../utils/utils.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ItemSearchComponent } from './components/item-search/item-search.compon
     MatIconModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    UtilsModule
   ]
 })
 export class SearchModule { }

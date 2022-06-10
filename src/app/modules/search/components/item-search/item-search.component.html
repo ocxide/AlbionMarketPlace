@@ -1,11 +1,20 @@
 <mat-form-field class="itemNameInput">
     <mat-label>Item Name</mat-label>
-    <input matInput type="text" [formControl]="itemNameInput" [matAutocomplete]="auto" autocomplete="off">
-    <!-- <button *ngIf="searchItemForm.controls['item_id'].value" matSuffix mat-icon-button aria-label="Clear" (click)="searchItemForm.controls['item_id'].reset();">
+    <input 
+        matInput 
+        type="text" 
+        [formControl]="itemNameInput" 
+        [matAutocomplete]="auto" 
+        autocomplete="off"
+    >
+    <button 
+        [appEreaseFormControl]="itemNameInput"
+        matSuffix mat-icon-button aria-label="Clear" 
+    >
         <mat-icon>close</mat-icon>
-    </button> -->
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectItem($event.option._getHostElement().attributes.getNamedItem('item_id')!.value)">
-        <mat-option *ngFor="let item of filItems | async" [value]="item.item_name" [attr.item_ID]="item.item_id" class="search-item-autocomplete">
+    </button>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectItemByHtmlElement($event.option._getHostElement())">
+        <mat-option *ngFor="let item of filItems | async" [value]="item.item_name" [attr.item_id]="item.item_id" class="search-item-autocomplete">
             <span>{{ item.item_name }}</span>
             <img src="https://render.albiononline.com/v1/item/{{item.item_id}}.png" alt="">
         </mat-option>
@@ -17,7 +26,7 @@
     <div class="">
         <mat-form-field id="tier">
             <mat-label>Tier</mat-label>
-            <mat-select formControlName="tier" multiple="{{isMultiple}}">
+            <mat-select formControlName="tier" [multiple]="true">
               <mat-option *ngFor="let tier of tierList" [value]="tier">{{ tier }}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -25,19 +34,20 @@
         <mat-form-field id="itemId">
             <mat-label>Item Name</mat-label>
             <input matInput type="text" formControlName="item_id" autocomplete="off">
-            <button *ngIf="searchItemForm.controls['item_id'].value" matSuffix mat-icon-button aria-label="Clear" (click)="searchItemForm.controls['item_id'].reset();">
+            <button 
+                [appEreaseFormControl]="searchItemForm.controls['item_id']"
+                matSuffix mat-icon-button aria-label="Clear" 
+            >
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
 
         <mat-form-field id="enchant">
             <mat-label>Encantamiento</mat-label>
-            <mat-select formControlName="enchant" multiple="{{isMultiple}}">
+            <mat-select formControlName="enchant" [multiple]="true">
                 <mat-option *ngFor="let enchant of enchantList" [value]="enchant">{{ enchant }}</mat-option>
             </mat-select>
-
         </mat-form-field>
-
     </div>
 
     <button type="submit" mat-flat-button color="primary">Buscar</button>
