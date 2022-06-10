@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemListService } from '../../services/item-list.service';
 
 import { ItemSearchComponent } from './item-search.component';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 
 describe('ItemSearchComponent', () => {
   let component: ItemSearchComponent;
@@ -25,14 +26,11 @@ describe('ItemSearchComponent', () => {
         ItemSearchComponent,
       ],
       imports: [
-        CommonModule,
         ReactiveFormsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatSelectModule,
         MatAutocompleteModule,
-        MatProgressSpinnerModule,
-        HttpClientTestingModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
         BrowserAnimationsModule
       ],
       providers: [

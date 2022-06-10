@@ -69,8 +69,6 @@ export class ItemTableComponent implements OnInit {
   }
 
   openClose(mode: boolean | null = null) {
-    console.log("d");
-
     if (mode === null) this.collapsed = !this.collapsed;
     else this.collapsed = mode;
   }

@@ -23,6 +23,6 @@ export class ItemListService {
       if (itemList2[(lastInd - itemList1.length)].item_name.toLowerCase().includes(item_name.toLowerCase())) { query.push(itemList2[(lastInd - itemList1.length)]); lastInd++; break; }
       }
     }
-    return query;
+    return query; 
    }
 }
