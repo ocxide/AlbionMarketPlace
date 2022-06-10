@@ -24,6 +24,11 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "paths": {
+      "@utils/*": ["./src/app/utils/*"],
+      "@gold/*": ["src/app/modules/gold/*"],
+      "@search/*": ["src/app/modules/search/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

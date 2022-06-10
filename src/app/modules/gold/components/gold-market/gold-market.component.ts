@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Value } from '../../interfaces/value';
@@ -8,19 +8,13 @@ import { GraphComponent } from '../graph/graph.component';
 import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
 import { PointsComponent } from '../points/points.component';
 import { sameDateValidator } from '../../validators/same-date.validators';
-
-type control<F extends FormGroup> = keyof F['controls']
-
+import { GoldMarketService } from './services/gold-market.service';
 @Component({
   selector: 'app-gold-market',
   templateUrl: './gold-market.component.html',
   styleUrls: ['./gold-market.component.scss']
 })
 export class GoldMarketComponent implements OnInit {
-
-  @ViewChild(GraphComponent) graphComponent!: GraphComponent;
-  @ViewChild(LabelAndPointsComponent) labelComponent!: LabelAndPointsComponent;
-  @ViewChild(PointsComponent) pointsComponent!: PointsComponent;
 
   range = new FormGroup({
     start: new FormControl('', Validators.required),
@@ -46,11 +40,10 @@ export class GoldMarketComponent implements OnInit {
     }
   }
 
-  valuePoints?: Value[];
-  loadingData: Boolean = false
+  points$?: Observable<Value[]>;
   
   constructor(
-    private http: HttpClient,
+    private glmServ: GoldMarketService
   ) { }
 
   ngOnInit(): void {
@@ -59,30 +52,7 @@ export class GoldMarketComponent implements OnInit {
   
   submit() {
     if (this.range.invalid) return;
-
-    this.loadingData = true
-
-    this.getGoldPrices(
-      new Date(this.range.value.start),
-      new Date(this.range.value.end)
-    )
-    .pipe(
-      map(values => 
-        values.map(value => ({...value, timestamp: new Date(value.timestamp).getTime() }))
-      )
-    )
-    .subscribe({
-      next: data => this.valuePoints = data,
-      complete: () => this.loadingData = false
-    });
+    this.points$ = this.glmServ.getGoldPrices(this.range.value.start, this.range.value.end)
   }
 
-  getGoldPrices(start: Date, end: Date) {
-    return this.http.get<DataPoint[]>(`https://www.albion-online-data.com/api/v2/stats/gold?date=${start.toJSON()}&end_date=${end.toJSON()}`);
-  }
-}
-
-interface DataPoint {
-  price: number,
-  timestamp: string 
 }

@@ -6,7 +6,7 @@ import {
 
 import { Point } from '../../interfaces/point';
 import { Value } from '../../interfaces/value';
-import { toPoints } from './calc';
+import { GraphService } from './services/graph.service';
 
 @Component({
   selector: 'app-graph',
@@ -27,7 +27,7 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
 
   display: boolean = false
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef, private grServ: GraphService) { }
 
   ngOnChanges() {
     this.ngOnChanges = () => this.render()
@@ -40,35 +40,10 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
     const svg = (this.graph.nativeElement as SVGAElement)
 
-    const boardSize = svg.getBoundingClientRect()
-    this.svgSize = { x: boardSize.width, y: boardSize.height }
+    this.updateSvgSize()
     this.render()
 
     this.cd.detectChanges()
-  }
-
-  private chekedCalculatePoints(values: Value[], board: Point): [ Point[], [ Value, Value ] ] {
-    if (values.length < 1) throw new Error('Cannot calculate points with less than 1 point')
-    
-    values = values.sort((a, b) => a.timestamp - b.timestamp)
-
-    const minValue: Value = { 
-        price: values.reduce((prev, next) => prev.price < next.price ? prev : next).price, 
-        timestamp: values[0].timestamp 
-    }
-
-    const rangeValue: Value = {
-        timestamp: values[values.length-1].timestamp - values[0].timestamp,
-        price: (
-            values.reduce((prev, next)=> prev.price > next.price ? prev : next).price - 
-            minValue.price
-        )
-    }
-
-    return [ 
-      toPoints(values as [Value, ...Value[]], board, minValue, rangeValue), 
-      [ minValue, rangeValue ] 
-    ]
   }
 
   private updateSvgSize() {
@@ -80,12 +55,12 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   reRender() {
     this.updateSvgSize()
 
-    this.points = toPoints(this.values as [Value, ...Value[]], this.svgSize!, ...this.minRangeValue!)
+    this.points = this.grServ.toPoints(this.values as [Value, ...Value[]], this.svgSize!, ...this.minRangeValue!)
     this.pointsRender = this.points.reduce((acc, next) => [...acc, next.x, next.y], [] as number[])
   }
 
-  private render() {
-    const [ points, minRange ] = this.chekedCalculatePoints(this.values, this.svgSize!)
+  render() {
+    const [ points, minRange ] = this.grServ.checkedToPoints(this.values, this.svgSize!)
 
     this.minRangeValue = minRange
     this.points = points

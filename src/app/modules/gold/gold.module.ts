@@ -10,10 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 
-import { HandlePointsPipe } from './pipes/handle-points.pipe';
-import { FormControlValidPipe } from './pipes/form-control-valid.pipe';
 import { CenterPointPipe } from './pipes/center-point.pipe';
-import { ToDatePipe } from './pipes/to-date.pipe';
 
 import { GoldMarketComponent } from './components/gold-market/gold-market.component';
 import { GraphComponent } from './components/graph/graph.component';
@@ -24,13 +21,10 @@ import { PointsComponent } from './components/points/points.component';
 @NgModule({
   declarations: [
     GoldMarketComponent,
-    ToDatePipe,
     GraphComponent,
     LabelAndPointsComponent,
     PointsComponent,
-    HandlePointsPipe,
     LabelComponent,
-    FormControlValidPipe,
     CenterPointPipe
   ],
   imports: [

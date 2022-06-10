@@ -5,6 +5,6 @@
 
     <ng-container *ngIf="points && svgSize && minRangeValue">
         <app-points [points]="points" [values]="values" [size]="7" [boardSize]="svgSize"></app-points>
-        <app-label [values]="values" [points]="points" [minRangeValue]="minRangeValue" [container]="graph"></app-label>
+        <app-label-and-points [values]="values" [points]="points" [minRangeValue]="minRangeValue" [container]="graph"></app-label-and-points>
     </ng-container>
 </div>

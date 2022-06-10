@@ -31,7 +31,6 @@ describe('LabelComponent', () => {
   })
 
   it('should have a default value for its non required Inputs', () => {
-    expect(component.point).toBeDefined()
     expect(component.value).toBeDefined()
     expect(component.offset).toBeDefined()    
     expect(component.display).toBeDefined()

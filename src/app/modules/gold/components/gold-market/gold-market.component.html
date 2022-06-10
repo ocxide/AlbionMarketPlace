@@ -35,11 +35,11 @@
         </form>
     </div>
     <div class="svg-container card" style="position: relative;">
-        <ng-container *ngIf="valuePoints">
-            <app-graph [values]="valuePoints"></app-graph>
+        <ng-container *ngIf="(points$ | async) as points; else loadingTemplate">
+            <app-graph [values]="points"></app-graph>
         </ng-container>
 
-        <ng-template *ngIf="loadingData">
+        <ng-template #loadingTemplate>
             <p style="position: absolute;">Loading...</p>
         </ng-template>
     </div>

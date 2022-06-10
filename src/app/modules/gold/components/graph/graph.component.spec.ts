@@ -7,6 +7,7 @@ import { LabelComponent } from '../label/label.component';
 import { PointsComponent } from '../points/points.component';
 
 import { GraphComponent } from './graph.component';
+import { GraphService } from './services/graph.service';
 
 describe('GraphComponent', () => {
   let component: GraphComponent;
@@ -15,7 +16,7 @@ describe('GraphComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ GraphComponent, LabelAndPointsComponent, PointsComponent, LabelComponent, CenterPointPipe ],
-      providers: [ChangeDetectorRef]
+      providers: [ChangeDetectorRef, GraphService]
     })
     .compileComponents();
   });
