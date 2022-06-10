@@ -1,4 +1,4 @@
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CenterPointPipe } from '../../pipes/center-point.pipe';
 
@@ -15,8 +15,9 @@ describe('GraphComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphComponent, LabelAndPointsComponent, PointsComponent, LabelComponent, CenterPointPipe ],
-      providers: [ChangeDetectorRef, GraphService]
+      declarations: [ GraphComponent ],
+      providers: [ChangeDetectorRef, GraphService],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   });

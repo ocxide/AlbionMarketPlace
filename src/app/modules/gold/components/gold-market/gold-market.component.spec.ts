@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { GoldMarketComponent } from './gold-market.component';
 import { GoldMarketService } from './services/gold-market.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('GoldMarketComponent', () => {
   let component: GoldMarketComponent;
@@ -13,7 +14,8 @@ describe('GoldMarketComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ GoldMarketComponent ],
       providers: [ GoldMarketService ],
-      imports: [ HttpClientTestingModule ]
+      imports: [ HttpClientTestingModule ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   });
