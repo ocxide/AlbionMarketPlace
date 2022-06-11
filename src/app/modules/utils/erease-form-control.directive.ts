@@ -14,7 +14,6 @@ export class EreaseFormControlDirective implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('aaa')
     if (!this.formControl) throw new TypeError('formControl Input is required')
   }
 

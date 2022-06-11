@@ -1,17 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ItemListService } from 'src/app/modules/search/services/item-list.service';
 import { Observable, debounceTime, startWith, map } from 'rxjs';
 
+import { ItemSearch } from '@search/interfaces/item-search';
+
 interface RawItemSearch {
   item_name: string,
   item_id: string
-}
-interface ItemSearch {
-  item_name: string,
-  tier: string[],
-  enchant: string[]
 }
 
 @Component({
