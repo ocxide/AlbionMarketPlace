@@ -33,7 +33,7 @@ export class MarketComponent implements OnInit {
     this.loadingData = true;
     
     this.items$ =
-    this.marketService.getItemsMode(item_id, tier, enchant)
+    this.marketService.getItems(item_id, tier, enchant)
     .pipe(tap(console.log), finalize(() => { 
       this.loadingData = false;
      }))

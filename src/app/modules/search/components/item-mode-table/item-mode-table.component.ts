@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QualityRequiredCity } from '@search/interfaces/quality-required-city';
 import { WindowSizes } from '@search/interfaces/window-sizes';
 import { WindowEventsService } from '@search/services/window-events.service';
@@ -9,7 +9,7 @@ import { map } from 'rxjs';
   templateUrl: './item-mode-table.component.html',
   styleUrls: ['./item-mode-table.component.scss']
 })
-export class ItemModeTableComponent implements OnInit {
+export class ItemModeTableComponent {
 
   @Input() title = ''
   @Input() cities!: QualityRequiredCity[]
@@ -19,9 +19,6 @@ export class ItemModeTableComponent implements OnInit {
   colspan$ = this.winESer.windowSize$.pipe(map(value => value === WindowSizes.small ? 1 : 2))
 
   constructor(private winESer: WindowEventsService) { }
-
-  ngOnInit(): void {
-  }
 
   toggleQualityColumn(quality: number) {
     this.columnActive[quality] = !this.columnActive[quality] ? 1 : 0
