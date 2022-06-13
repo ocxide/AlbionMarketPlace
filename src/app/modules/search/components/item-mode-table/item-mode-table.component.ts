@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { QualityRequiredCity } from '@search/interfaces/quality-required-city';
 import { WindowSizes } from '@search/interfaces/window-sizes';
 import { WindowEventsService } from '@search/services/window-events.service';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-item-mode-table',
@@ -16,7 +16,7 @@ export class ItemModeTableComponent {
 
   qualityList = [ 1, 2, 3, 4, 5 ]
   columnActive: Array<0 | 1> = [ 0, 0, 0, 0, 0 ]
-  colspan$ = this.winESer.windowSize$.pipe(map(value => value === WindowSizes.small ? 1 : 2))
+  colspan$ = this.winESer.windowSize$.pipe(map(value => value === WindowSizes.small ? 2 : 1), tap(console.log))
 
   constructor(private winESer: WindowEventsService) { }
 

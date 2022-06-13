@@ -7,7 +7,7 @@ import { WINDOW_TOKEN } from './window.injectable';
 type windowParams = { [key in keyof typeof WindowSizes]: number }
 
 const windowSizes: windowParams = {
-  small: 600,
+  small: 768,
   medium: 900,
   large: -1
 }

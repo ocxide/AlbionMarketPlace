@@ -37,6 +37,12 @@ hr {
     margin: 0;
 }
 
+@media (max-width: 768px) {
+    .hidden-col {
+        display: none;
+    }
+}
+
 @media screen and (min-width: 768px) {
     .btn-quality-header {
         pointer-events: none;
