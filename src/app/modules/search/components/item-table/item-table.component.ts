@@ -33,8 +33,8 @@ export class ItemTableComponent implements OnInit {
   sell!: QualityRequiredCity[]
   buy!: QualityRequiredCity[]
 
-
-  collapsed: boolean = false;
+  @Input()
+  collapsed: boolean = true;
 
   constructor() { }
 
