@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 
 import { ModifiedCity } from '@search/interfaces/modified-city'
@@ -11,20 +11,29 @@ import { Item } from '@search/interfaces/item';
 })
 export class MarketService {
 
-  constructor(
-    private _http: HttpClient
-  ) { }
+  constructor(private _http: HttpClient) { }
   
   getItems(item_id: string, tier: string[] = [], enchant: string[] = []) {
     const itemList = this.getItemList(item_id, tier, enchant)
 
     return this._http.get<ItemQueryI[]>('https://www.albion-online-data.com/api/v2/stats/prices/' + (itemList || item_id) )
     .pipe(
+      map(data => this.filterRawEmptyItems(data)),
+      tap(console.log),
       map(data => data.map(this.toItem_)),
       map(data => this.reduceItems(data)),
       map(data => this.reduceCitiesPerItem(data)),
     )
 
+  }
+
+  private filterRawEmptyItems(items: ItemQueryI[]) {
+    return items.filter(item => (
+      item.buy_price_max !== 0 ||
+      item.buy_price_min !== 0 ||
+      item.sell_price_max !== 0 ||
+      item.sell_price_min !== 0
+    ))
   }
 
   private getItemList(item_id: string, tiers: string[] = [], enchants: string[] = []) {
