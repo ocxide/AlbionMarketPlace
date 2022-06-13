@@ -1,0 +1,1 @@
+export type WindowEvent = Event & { target: Window }

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 
-import { ItemI } from 'src/app/modules/search/interfaces/item-show-i';
+import { Item } from '@search/interfaces/item';
+import { QualityRequiredCity } from '@search/interfaces/quality-required-city';
+import { ModifiedCity } from '@search/interfaces/modified-city';
 
 @Component({
   selector: 'item-table',
@@ -21,56 +23,39 @@ import { ItemI } from 'src/app/modules/search/interfaces/item-show-i';
 })
 export class ItemTableComponent implements OnInit {
 
-  @Input() item: ItemI = {
-    item_id: '',
-    cities: []
-  };
+  @Input('item') set itemSetter(val: Item) {
+    this.itemId = val.item_id
+    this.sell = val.sell.map(this.parseCity)
+    this.buy = val.buy.map(this.parseCity)
+  }
 
-  @Input() currentSize!: string;
+  itemId!: string;
+  sell!: QualityRequiredCity[]
+  buy!: QualityRequiredCity[]
 
-  qualityList: number[] = [ 1, 2, 3, 4, 5 ];
-  showColList: Map<number, number>[] = [
-    new Map<number, number>([ [1, 2], [2, 2], [3, 2], [4, 2], [5, 2] ]),
-    new Map<number, number>([ [1, 1], [2, 1], [3, 1], [4, 1], [5, 1] ]),
-  ];
-  
-  groupSize!: number;
-  isSmScreen!:boolean;
 
   collapsed: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.resize(this.currentSize);
+    if (!this.itemId) throw new TypeError('item Input is required')
   }
 
-  selectColumn(table:number, quality: number, column:number): void {
-      this.showColList[table].set(quality, column);
+  openClose(mode?: boolean) {
+    this.collapsed = mode ?? !this.collapsed
   }
 
-  isHiddenColumn(table:number, quality: number, column:number): boolean {
-    if (!this.isSmScreen) return false;
-    return this.showColList[table].get(quality) != column;
-  }
-
-  resize(size:string):void {
-    switch (size) {
-      case 'sm':
-      case 'md':
-        this.groupSize = 2;
-        this.isSmScreen = true;
-        break;
-      default:
-        this.groupSize = 1;
-        this.isSmScreen = false;
-        break;
+  private parseCity(city: ModifiedCity): QualityRequiredCity {
+    return {
+      ...city,
+      qualities: [
+        city.qualities[0],
+        city.qualities[1],
+        city.qualities[2],
+        city.qualities[3],
+        city.qualities[4],
+      ]
     }
   }
-
-  openClose(mode: boolean | null = null) {
-    if (mode === null) this.collapsed = !this.collapsed;
-    else this.collapsed = mode;
-  }
-
 }

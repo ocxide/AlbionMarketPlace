@@ -17,6 +17,7 @@ import { QualitifyPipe } from './pipes/qualitify.pipe';
 import { MarketComponent } from './components/market/market.component';
 import { ItemSearchComponent } from './components/item-search/item-search.component';
 import { UtilsModule } from '../utils/utils.module';
+import { ItemModeTableComponent } from './components/item-mode-table/item-mode-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UtilsModule } from '../utils/utils.module';
     MarketComponent,
     CoinPipe,
     QualitifyPipe,
+    ItemModeTableComponent,
   ],
   imports: [
     CommonModule,

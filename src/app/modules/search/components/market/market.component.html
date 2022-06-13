@@ -1,7 +1,7 @@
 <item-search (itemSubmit)="searchItem($event)"></item-search>
 
 <div class="" *ngIf="(items$ | async) as items">
-  <item-table *ngFor="let item of items" [item]="item" [currentSize]="windowSize"></item-table>
+  <item-table *ngFor="let item of items" [item]="item"></item-table>
 </div>
 <div class="spinner-container" *ngIf="loadingData">
   <mat-spinner></mat-spinner>

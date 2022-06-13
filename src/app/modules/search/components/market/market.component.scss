@@ -12,3 +12,13 @@
     align-items: center;
     height: 60vh;
 }
+
+.test-btn {
+    
+}
+
+@media screen and (min-width: 800px) {
+    .test-btn {
+        pointer-events: none;
+    }
+}

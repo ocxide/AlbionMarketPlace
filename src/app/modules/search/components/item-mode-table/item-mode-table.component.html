@@ -1,0 +1,52 @@
+<table class="table table-striped" *ngIf="colspan$ | async as colspan">
+    <thead>
+      <tr>
+        <th [attr.colspan]="2*qualityList.length + 1">{{ title }}</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th colspan="2" *ngFor="let quality of qualityList">{{  quality | qualitify }}</th>
+      </tr>
+      <tr>
+        <th><div class="center">City</div></th>
+        <ng-container *ngFor="let quality of qualityList">
+          <th [attr.colspan]="colspan" [ngClass]="{ 'd-none': columnActive[quality] }">
+            <button
+                mat-button 
+                (click)="toggleQualityColumn(quality)" 
+                class="btn-quality-header" 
+            >+</button>
+          </th>
+          <th [attr.colspan]="colspan" [ngClass]="{ 'd-none': !columnActive[quality] }">
+            <button
+            mat-button 
+            (click)="toggleQualityColumn(quality)" 
+            class="btn-quality-header"
+            >-</button>
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of cities">
+        <td>{{ city.city }}</td>
+        <ng-container *ngFor="let quality of city.qualities">
+          <ng-container *ngIf="quality; else notAvaliablePrice">
+            <td [attr.colspan]="colspan" [ngClass]="{ 'd-none': columnActive[quality.quality] }">
+              <p>{{ quality.amount_price_max | coin }}</p>
+              <p>{{ quality.amount_price_max_date | date }}</p>
+            </td>
+            <td [attr.colspan]="colspan" [ngClass]="{ 'd-none': !columnActive[quality.quality] }">
+              <p>{{ quality.amount_price_min | coin }}</p>
+              <p>{{ quality.amount_price_min_date | date }}</p>
+            </td>
+          </ng-container>
+          <ng-template #notAvaliablePrice>
+            <td colspan="2">
+              <p>No disponible</p>
+            </td>
+          </ng-template>
+        </ng-container>
+      </tr>
+    </tbody>
+</table>

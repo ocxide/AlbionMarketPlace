@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+}
+
+td, th {
+    min-width: 40px;
+    padding: 0;
+    text-align: center;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 36px;
+}
+
+td {
+    text-align: left;
+    padding: 2px;
+}
+
+p { margin: 0; padding: 0; }
+
+.separe-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+hr {
+    background-color: #000;
+    height: 2px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .btn-quality-header {
+        pointer-events: none;
+    }
+
+    td {
+        text-align: center;
+    }
+}
