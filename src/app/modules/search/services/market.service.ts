@@ -19,7 +19,6 @@ export class MarketService {
     return this._http.get<ItemQueryI[]>('https://www.albion-online-data.com/api/v2/stats/prices/' + (itemList || item_id) )
     .pipe(
       map(data => this.filterRawEmptyItems(data)),
-      tap(console.log),
       map(data => data.map(this.toItem_)),
       map(data => this.reduceItems(data)),
       map(data => this.reduceCitiesPerItem(data)),

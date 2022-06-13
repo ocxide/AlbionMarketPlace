@@ -39,13 +39,8 @@ p { margin: 0; padding: 0; }
 .item-table-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    cursor: pointer;
+    align-items: center;
     padding: 10px;
-
-    &hover {
-        background-color: rgb(3, 3, 3);
-    }
 
     h3 {
         padding: 0;
@@ -57,11 +52,15 @@ p { margin: 0; padding: 0; }
         }
     }
 
-    img {
-        width: 60px;
+    .right-container {
+        gap: 10px;
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 60px;
+        }
     }
-
-
 }
 
 hr {
