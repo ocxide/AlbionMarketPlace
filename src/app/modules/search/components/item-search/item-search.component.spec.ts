@@ -15,6 +15,7 @@ import { ItemListService } from '../../services/item-list.service';
 
 import { ItemSearchComponent } from './item-search.component';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ItemSearchComponent', () => {
   let component: ItemSearchComponent;
@@ -35,7 +36,8 @@ describe('ItemSearchComponent', () => {
       ],
       providers: [
         ItemListService
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   });

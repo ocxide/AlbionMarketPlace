@@ -8,7 +8,10 @@ describe('WindowEventsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WINDOW_TOKEN]
+      providers: [{
+        provide: WINDOW_TOKEN,
+        useValue: window
+      }]
     });
     service = TestBed.inject(WindowEventsService);
   });
