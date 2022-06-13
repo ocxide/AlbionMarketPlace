@@ -1,8 +1,6 @@
-import { Component, OnInit, QueryList, ViewChildren, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { MarketService } from 'src/app/modules/search/services/market.service';
-import { ItemI } from 'src/app/modules/search/interfaces/item-show-i';
-import { ItemTableComponent } from '../item-table/item-table.component';
 import { finalize, Observable, tap } from 'rxjs';
 import { ItemSearch } from '@search/interfaces/item-search';
 

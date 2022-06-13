@@ -1,6 +1,6 @@
 <item-search (itemSubmit)="searchItem($event)"></item-search>
 
-<div class="" *ngIf="(items$ | async) as items">
+<div class="items-container" *ngIf="(items$ | async) as items">
   <item-table [item]="items[0]" [collapsed]="false"></item-table>
   <item-table *ngFor="let item of items | slice: 1" [item]="item"></item-table>
 </div>

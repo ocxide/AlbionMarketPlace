@@ -1,4 +1,4 @@
-export interface ItemQueryI {
+export interface RawItem {
     item_id: string,
     city: string,
     quality: number,

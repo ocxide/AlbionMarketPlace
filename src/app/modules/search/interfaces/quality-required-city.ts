@@ -1,12 +1,12 @@
-import { ModifiedCity } from "./modified-city"
-import { ModifiedQuality } from "./modified-quality"
+import { City } from "./city"
+import { Quality } from "./quality"
 
-export type QualityRequiredCity = Omit<ModifiedCity, 'qualities'> & {
+export type QualityRequiredCity = Omit<City, 'qualities'> & {
     qualities: [
-      ModifiedQuality | undefined, 
-      ModifiedQuality | undefined, 
-      ModifiedQuality | undefined, 
-      ModifiedQuality | undefined, 
-      ModifiedQuality | undefined
+      Quality | undefined, 
+      Quality | undefined, 
+      Quality | undefined, 
+      Quality | undefined, 
+      Quality | undefined
     ]
   }

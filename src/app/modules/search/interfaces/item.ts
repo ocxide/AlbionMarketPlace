@@ -1,7 +1,7 @@
-import { ModifiedCity } from "./modified-city";
+import { City } from "./city";
 
 export interface Item { 
     item_id: string, 
-    sell: ModifiedCity[], 
-    buy: ModifiedCity[] 
+    sell: City[], 
+    buy: City[] 
   }

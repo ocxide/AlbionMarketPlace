@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 
-import { ModifiedCity } from '@search/interfaces/modified-city'
-import { ItemQueryI } from '../interfaces/item-i';
+import { City } from '@search/interfaces/city'
+import { RawItem } from '../interfaces/item-i';
 import { Item } from '@search/interfaces/item';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class MarketService {
   getItems(item_id: string, tier: string[] = [], enchant: string[] = []) {
     const itemList = this.getItemList(item_id, tier, enchant)
 
-    return this._http.get<ItemQueryI[]>('https://www.albion-online-data.com/api/v2/stats/prices/' + (itemList || item_id) )
+    return this._http.get<RawItem[]>('https://www.albion-online-data.com/api/v2/stats/prices/' + (itemList || item_id) )
     .pipe(
       map(data => this.filterRawEmptyItems(data)),
       map(data => data.map(this.toItem_)),
@@ -26,7 +26,7 @@ export class MarketService {
 
   }
 
-  private filterRawEmptyItems(items: ItemQueryI[]) {
+  private filterRawEmptyItems(items: RawItem[]) {
     return items.filter(item => (
       item.buy_price_max !== 0 ||
       item.buy_price_min !== 0 ||
@@ -78,8 +78,8 @@ export class MarketService {
     }, [])
   }
 
-  private reduceCities(cities: ModifiedCity[]) {
-    return cities.reduce<ModifiedCity[]>((acc, next) => {
+  private reduceCities(cities: City[]) {
+    return cities.reduce<City[]>((acc, next) => {
       const i = acc.findIndex(city => city.city === next.city)
       if (i === -1) acc.push(next)
       else acc[i].qualities.push(...next.qualities)
@@ -87,8 +87,8 @@ export class MarketService {
     },[])
   }
 
-  private toItem_(item: ItemQueryI): Item {
-    const sell: ModifiedCity = {
+  private toItem_(item: RawItem): Item {
+    const sell: City = {
       city: item.city,
       qualities: [{
         quality: item.quality,
@@ -99,7 +99,7 @@ export class MarketService {
       }]
     }
 
-    const buy: ModifiedCity = {
+    const buy: City = {
       city: item.city,
       qualities: [{
         quality: item.quality,

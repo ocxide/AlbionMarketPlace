@@ -3,7 +3,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
 
 import { Item } from '@search/interfaces/item';
 import { QualityRequiredCity } from '@search/interfaces/quality-required-city';
-import { ModifiedCity } from '@search/interfaces/modified-city';
+import { City } from '@search/interfaces/city';
 
 @Component({
   selector: 'item-table',
@@ -46,7 +46,7 @@ export class ItemTableComponent implements OnInit {
     this.collapsed = mode ?? !this.collapsed
   }
 
-  private parseCity(city: ModifiedCity): QualityRequiredCity {
+  private parseCity(city: City): QualityRequiredCity {
     return {
       ...city,
       qualities: [
