@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { WindowEventsService } from './window-events.service';
 import { WINDOW_TOKEN } from './window.injectable';
 
-const mockWindow = document.createElement('div')
+const mockWindow = window
 
 describe('WindowEventsService', () => {
   let service: WindowEventsService;
@@ -12,7 +12,7 @@ describe('WindowEventsService', () => {
     TestBed.configureTestingModule({
       providers: [{
         provide: WINDOW_TOKEN,
-        useValue: window
+        useValue: mockWindow
       }]
     });
     service = TestBed.inject(WindowEventsService);
@@ -37,17 +37,19 @@ describe('WindowEventsService', () => {
     const sizes = [700, 1000, 2000]
     let i = 0
 
-    window.resizeBy(sizes[i], 1000)
+    const spy = spyOnProperty(window, 'innerWidth').and.returnValue(sizes[i])
+    
     service.windowSize$.subscribe({
-      next: size => {
-        console.log(size)
-        expect(size).toBe(i)
-        i++
-        if (sizes[i])
-          window.resizeBy(sizes[i], 1000)
+      next: c => {
+        expect(c).toBe(i)
+
+        if (sizes[++i]) {
+          spy.and.returnValue(sizes[i])
+          mockWindow.dispatchEvent(new Event('resize'))
+        }
         else service.ngOnDestroy()
       },
-      complete: () => done()
+      complete: done
     })
     
   })

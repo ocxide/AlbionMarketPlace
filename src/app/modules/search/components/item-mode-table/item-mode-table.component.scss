@@ -37,13 +37,15 @@ hr {
     margin: 0;
 }
 
-@media (max-width: 768px) {
+
+$width-breakpoint: 900px;
+@media (max-width: $width-breakpoint) {
     .hidden-col {
         display: none;
     }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: $width-breakpoint) {
     .btn-quality-header {
         pointer-events: none;
     }

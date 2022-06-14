@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { WindowSizes } from '@search/interfaces/window-sizes';
 import { WindowEvent } from '@utils/window-event';
-import { debounceTime, fromEvent, ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { audit, debounceTime, fromEvent, interval, ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { WINDOW_TOKEN } from './window.injectable';
 
 type windowParams = { [key in keyof typeof WindowSizes]: number }
@@ -22,10 +22,7 @@ export class WindowEventsService implements OnDestroy {
 
   constructor(@Inject(WINDOW_TOKEN) private window: Window) { 
     fromEvent<WindowEvent>(this.window, 'resize')
-    .pipe(
-      takeUntil(this.unsuscriber$),
-      debounceTime(300)
-    )
+    .pipe(takeUntil(this.unsuscriber$), audit(v => interval(1000)))
     .subscribe(e => this.detectWindowSize(e))
 
     setTimeout(() => this.window.dispatchEvent(new Event('resize')), 10)
@@ -38,7 +35,6 @@ export class WindowEventsService implements OnDestroy {
     const [keysize] = sizes.find(([key, value]) => value >= windowWidth) || sizes[sizes.length-1]
 
     const size = WindowSizes[keysize as keyof typeof WindowSizes]
-    console.log(windowWidth, size)
     this.windowSize$.next(size)
   }
   
