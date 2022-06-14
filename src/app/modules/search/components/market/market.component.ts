@@ -21,7 +21,6 @@ export class MarketComponent implements OnInit {
 
   constructor(
     private marketService: MarketService,
-    @Inject(WINDOW_TOKEN) private window: Window
     ) {}
 
   ngOnInit(): void {
@@ -32,7 +31,7 @@ export class MarketComponent implements OnInit {
     
     this.items$ =
     this.marketService.getItems(item_id, tier, enchant)
-    .pipe(tap(console.log), finalize(() => { 
+    .pipe(finalize(() => { 
       this.loadingData = false;
      }))
   }

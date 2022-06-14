@@ -6,12 +6,6 @@ import { WINDOW_TOKEN } from './window.injectable';
 
 type windowParams = { [key in keyof typeof WindowSizes]: number }
 
-const windowSizes: windowParams = {
-  small: 768,
-  medium: 900,
-  large: -1
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +13,12 @@ export class WindowEventsService implements OnDestroy {
 
   private unsuscriber$ = new Subject<void>()
   windowSize$ = new ReplaySubject<WindowSizes>(1)
+
+  windowSizes: windowParams = {
+    small: 768,
+    medium: 900,
+    large: -1
+  }
 
   constructor(@Inject(WINDOW_TOKEN) private window: Window) { 
     fromEvent<WindowEvent>(this.window, 'resize')
@@ -34,12 +34,12 @@ export class WindowEventsService implements OnDestroy {
   private detectWindowSize(e: WindowEvent) {
     const windowWidth = e.target.innerWidth
 
-    let currentSize: WindowSizes;
-    if (windowWidth <= windowSizes.small) currentSize = WindowSizes.small
-    else if (windowWidth <= windowSizes.medium) currentSize = WindowSizes.medium
-    else currentSize = WindowSizes.large
+    const sizes = Object.entries(this.windowSizes)
+    const [keysize] = sizes.find(([key, value]) => value >= windowWidth) || sizes[sizes.length-1]
 
-    this.windowSize$.next(currentSize)
+    const size = WindowSizes[keysize as keyof typeof WindowSizes]
+    console.log(windowWidth, size)
+    this.windowSize$.next(size)
   }
   
   ngOnDestroy(): void {

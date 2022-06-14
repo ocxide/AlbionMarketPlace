@@ -16,7 +16,7 @@ export class ItemModeTableComponent {
 
   qualityList = [ 1, 2, 3, 4, 5 ]
   columnActive: Array<0 | 1> = [ 0, 0, 0, 0, 0 ]
-  colspan$ = this.winESer.windowSize$.pipe(map(value => value === WindowSizes.small ? 2 : 1), tap(console.log))
+  colspan$ = this.winESer.windowSize$.pipe(map(value => value <= WindowSizes.medium ? 2 : 1), tap(v => console.log("col-size:", v)))
 
   constructor(private winESer: WindowEventsService) { }
 
