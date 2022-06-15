@@ -2,6 +2,7 @@ import { Directive, HostListener, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms'
 
 @Directive({
+  standalone: true,
   selector: '[appEreaseFormControl]',
   host: {
     '[style.display]': 'formControl.value ? "" : "none"'

@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { TableComponent } from './components/table/table.component';
 import { CoinPipe } from './pipes/coin.pipe';
 import { ItemTableComponent } from './components/item-table/item-table.component';
 import { QualitifyPipe } from './pipes/qualitify.pipe';
@@ -21,7 +20,6 @@ import { ItemModeTableComponent } from './components/item-mode-table/item-mode-t
 
 @NgModule({
   declarations: [
-    TableComponent,
     ItemSearchComponent,
     ItemTableComponent,
     MarketComponent,
