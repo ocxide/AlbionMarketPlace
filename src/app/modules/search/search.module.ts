@@ -15,8 +15,8 @@ import { ItemTableComponent } from './components/item-table/item-table.component
 import { QualitifyPipe } from './pipes/qualitify.pipe';
 import { MarketComponent } from './components/market/market.component';
 import { ItemSearchComponent } from './components/item-search/item-search.component';
-import { UtilsModule } from '../utils/utils.module';
 import { ItemModeTableComponent } from './components/item-mode-table/item-mode-table.component';
+import { EreaseFormControlDirective } from '../../utils/directives/erease-form-control/erease-form-control.directive';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { ItemModeTableComponent } from './components/item-mode-table/item-mode-t
     MatIconModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    UtilsModule
+    EreaseFormControlDirective
   ]
 })
 export class SearchModule { }

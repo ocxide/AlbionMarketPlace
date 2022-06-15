@@ -8,8 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { EreaseFormControlDirective } from '@utils/directives/erease-form-control/erease-form-control.directive';
+
 import { MarketService } from '@search/services/market.service';
-import { EreaseFormControlDirective } from 'src/app/modules/utils/erease-form-control.directive';
 import { ItemSearchComponent } from '../item-search/item-search.component';
 
 import { MarketComponent } from './market.component';
@@ -20,7 +21,7 @@ describe('MarketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MarketComponent, ItemSearchComponent, EreaseFormControlDirective ],
+      declarations: [ MarketComponent, ItemSearchComponent ],
       providers: [MarketService],
       imports: [
          HttpClientTestingModule,        
@@ -29,7 +30,8 @@ describe('MarketComponent', () => {
         MatSelectModule,
         MatFormFieldModule,
         MatInputModule,
-        BrowserAnimationsModule 
+        BrowserAnimationsModule,
+        EreaseFormControlDirective
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
