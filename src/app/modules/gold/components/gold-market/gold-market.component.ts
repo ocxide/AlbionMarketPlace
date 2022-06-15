@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { finalize, map, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Value } from '../../interfaces/value';
-import { GraphComponent } from '../graph/graph.component';
-import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
-import { PointsComponent } from '../points/points.component';
 import { sameDateValidator } from '../../validators/same-date.validators';
 import { GoldMarketService } from './services/gold-market.service';
 @Component({
@@ -16,17 +12,14 @@ import { GoldMarketService } from './services/gold-market.service';
 })
 export class GoldMarketComponent implements OnInit {
 
-  range = new UntypedFormGroup({
-    start: new UntypedFormControl('', Validators.required),
-    end: new UntypedFormControl('', Validators.required),
-  },
-  { 
+  range = new FormGroup({
+    start: new FormControl('', { nonNullable: true, validators: Validators.required }),
+    end: new FormControl('', { nonNullable: true, validators: Validators.required })
+  }, {
     validators: sameDateValidator('start', 'end')
-  });
+  })
 
-  messageErrors: { 
-    [key: string]: { [key: string]: string } 
-  } = {
+  messageErrors: { [key: string]: { [key: string]: string } } = {
     'start': {
       'required': 'Date Required',
       'invalid': 'Date invalid'
@@ -42,9 +35,7 @@ export class GoldMarketComponent implements OnInit {
 
   points$?: Observable<Value[]>;
   
-  constructor(
-    private glmServ: GoldMarketService
-  ) { }
+  constructor(private glmServ: GoldMarketService) {}
 
   ngOnInit(): void {
   }
@@ -52,7 +43,9 @@ export class GoldMarketComponent implements OnInit {
   
   submit() {
     if (this.range.invalid) return;
-    this.points$ = this.glmServ.getGoldPrices(this.range.value.start, this.range.value.end)
+    
+    const { start, end } = this.range.value
+    this.points$ = this.glmServ.getGoldPrices(start!, end!)
   }
 
 }

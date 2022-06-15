@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { ItemListService } from 'src/app/modules/search/services/item-list.service';
 import { Observable, debounceTime, startWith, map } from 'rxjs';
@@ -18,27 +18,29 @@ interface RawItemSearch {
 })
 export class ItemSearchComponent implements OnInit {
 
+  private fb = new FormBuilder().nonNullable
+
   tierList: string[] = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'];
   enchantList: string[] = ['@0', '@1', '@2', '@3'];
 
-  searchItemForm: UntypedFormGroup = new UntypedFormGroup({
-      tier: new UntypedFormControl('', Validators.required),
-      item_id: new UntypedFormControl('', Validators.required),
-      enchant: new UntypedFormControl('', Validators.required)
-  });
+  searchItemForm = this.fb.group({
+    item_id: this.fb.control('', Validators.required),
+    tier: this.fb.control<string[]>([], Validators.required),
+    enchant: this.fb.control<string[]>([], Validators.required)
+  })
 
-  itemNameInput: UntypedFormControl = new UntypedFormControl('');
+  itemNameInput = this.fb.control('', Validators.required)
 
   filItems: Observable<RawItemSearch[]>;
 
   @Output('itemSubmit') 
   itemEmitter = new EventEmitter<ItemSearch>();
 
-  constructor(private itemListService: ItemListService) {
+  constructor(private itemLsSer: ItemListService) {
       this.filItems = this.itemNameInput.valueChanges.pipe(
         debounceTime(300),
         startWith(''),
-        map(itemName => this.itemListService.search(itemName, 20) )
+        map(itemName => this.itemLsSer.search(itemName, 20) )
       );
    }
 
@@ -46,8 +48,9 @@ export class ItemSearchComponent implements OnInit {
   }
 
   sendItem() {
-    if (this.searchItemForm.invalid) return;
-    this.itemEmitter.emit(this.searchItemForm.value);
+    if (this.searchItemForm.invalid) return; 
+    /* Validating the data, so searchItemForm value will never be incorrect */
+    this.itemEmitter.emit(this.searchItemForm.value as any);
   }
 
   selectItemByHtmlElement(element: HTMLElement) {
@@ -57,18 +60,18 @@ export class ItemSearchComponent implements OnInit {
     return this.selectItem(item_id)
   }
 
-  selectItem(item_id: string): void {
-    const { item_enchant, item_name, item_tier } = this.itemListService.selectItem(item_id);
+  private selectItem(item_id: string): void {
+    const { item_enchant, item_name, item_tier } = this.itemLsSer.selectItem(item_id);
 
-    if (item_tier) this.searchItemForm.controls['tier'].enable()
-    else this.searchItemForm.controls['tier'].disable()
+    if (item_tier) this.searchItemForm.controls.tier.enable()
+    else this.searchItemForm.controls.tier.disable()
 
-    if (item_enchant) this.searchItemForm.controls['enchant'].enable()
-    else this.searchItemForm.controls['enchant'].disable()
+    if (item_enchant) this.searchItemForm.controls.enchant.enable()
+    else this.searchItemForm.controls.enchant.disable()
 
-    this.searchItemForm.controls['item_id'].setValue(item_name);
-    this.searchItemForm.controls['tier'].setValue([item_tier]);
-    this.searchItemForm.controls['enchant'].setValue([item_enchant]);
+    this.searchItemForm.controls.item_id.setValue(item_name);
+    this.searchItemForm.controls.tier.setValue([item_tier]);
+    this.searchItemForm.controls.enchant.setValue([item_enchant]);
   }
 
 }

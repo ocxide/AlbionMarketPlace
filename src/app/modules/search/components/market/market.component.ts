@@ -1,13 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MarketService } from 'src/app/modules/search/services/market.service';
-import { finalize, Observable, tap } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { ItemSearch } from '@search/interfaces/item-search';
 
-import { WINDOW_TOKEN } from '@search/services/window.injectable';
 import { Item } from '@search/interfaces/item';
-
-type WindowEvent = Event & { target: Window }
 
 @Component({
   selector: 'app-market',
