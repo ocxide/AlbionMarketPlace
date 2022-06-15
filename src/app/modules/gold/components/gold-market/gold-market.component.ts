@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { finalize, map, Observable } from 'rxjs';
 
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Value } from '../../interfaces/value';
 import { GraphComponent } from '../graph/graph.component';
 import { LabelAndPointsComponent } from '../label-and-points/label-and-points.component';
@@ -16,9 +16,9 @@ import { GoldMarketService } from './services/gold-market.service';
 })
 export class GoldMarketComponent implements OnInit {
 
-  range = new FormGroup({
-    start: new FormControl('', Validators.required),
-    end: new FormControl('', Validators.required),
+  range = new UntypedFormGroup({
+    start: new UntypedFormControl('', Validators.required),
+    end: new UntypedFormControl('', Validators.required),
   },
   { 
     validators: sameDateValidator('start', 'end')

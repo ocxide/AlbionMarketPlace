@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 import { ItemListService } from 'src/app/modules/search/services/item-list.service';
 import { Observable, debounceTime, startWith, map } from 'rxjs';
@@ -21,13 +21,13 @@ export class ItemSearchComponent implements OnInit {
   tierList: string[] = ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'];
   enchantList: string[] = ['@0', '@1', '@2', '@3'];
 
-  searchItemForm: FormGroup = new FormGroup({
-      tier: new FormControl('', Validators.required),
-      item_id: new FormControl('', Validators.required),
-      enchant: new FormControl('', Validators.required)
+  searchItemForm: UntypedFormGroup = new UntypedFormGroup({
+      tier: new UntypedFormControl('', Validators.required),
+      item_id: new UntypedFormControl('', Validators.required),
+      enchant: new UntypedFormControl('', Validators.required)
   });
 
-  itemNameInput: FormControl = new FormControl('');
+  itemNameInput: UntypedFormControl = new UntypedFormControl('');
 
   filItems: Observable<RawItemSearch[]>;
 
