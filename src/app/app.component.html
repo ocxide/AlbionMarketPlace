@@ -6,9 +6,13 @@
   </h1>
 </header>
 <nav mat-tab-nav-bar>
-  <a mat-tab-link *ngFor="let link of links"
-     [active]="activeLink.url == link.url"
-     [routerLink]="[link.url]"> 
+  <a *ngFor="let link of links"
+      #active="routerLinkActive"
+      mat-tab-link
+      [active]="active.isActive"
+      [routerLink]="[link.url]"
+      routerLinkActive
+     > 
      {{link.name}}
   </a>
 </nav>

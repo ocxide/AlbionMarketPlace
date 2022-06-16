@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+
+interface Link {
+  url: string,
+  name: string
+}
 
 @Component({
   selector: 'app-root',
@@ -7,19 +11,16 @@ import { Location } from '@angular/common';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'AlbionMarket';
 
-  links: { url:string, name: string }[] = [
+  links: Link[] = [
     { url: '/search', name: 'Buscar' },
     { url: '/gold', name: 'Oro' },
   ];
-  activeLink: typeof this.links[0] = this.links[0];
 
   constructor(
-    private location: Location
   ) {}
 
   ngOnInit() {
-    this.location.onUrlChange(url => this.activeLink = { url, name: '' });
+
   }
 }
