@@ -31,4 +31,13 @@ describe('GoldMarketComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should validate that start and end date are not equal', () => {
+    component.range.setValue({
+      start: '2022-06-15T23:41:16.999Z',
+      end: '2022-06-15T23:41:16.999Z'
+    })
+
+    expect(component.range.invalid).toBeTruthy()
+  })
+
 });

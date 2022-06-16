@@ -1,46 +1,29 @@
 <div class="container">
     <div class="button-container">
         <form (ngSubmit)="submit()" [formGroup]="range">
-            <div class="field-container">
-                <div class="field">
-                    <input type="date" formControlName="start" name="start">
-                    <!-- <p class="error"
-                    *ngIf="range.controls['start'].invalid && range.controls['start'].touched"
-                    >Invalid date</p> -->
-                    
-                    <ng-container *ngIf="range.controls['start'].touched && range.controls['start']['errors']">
-                        <ng-container *ngFor="let error of messageErrors['start'] | keyvalue">
-                            <p class="error" *ngIf="range.controls['start']['errors'][error.key]">{{ error.value }}</p> 
-                        </ng-container>
-                    </ng-container>
-                </div>
-                <div class="field">
-                    <input type="date" formControlName="end" name="end">
-                    <ng-container *ngIf="range.controls['end'].touched && range.controls['end']['errors']">
-                        <ng-container *ngFor="let error of messageErrors['end'] | keyvalue">
-                            <p class="error" *ngIf="range.controls['end']['errors'][error.key]">{{ error.value }}</p> 
-                        </ng-container>
-                    </ng-container>
-
-                    <ng-container *ngIf="range.touched && range['errors']">
-                        <ng-container *ngFor="let error of messageErrors['range'] | keyvalue">
-                            <p class="error" *ngIf="range['errors'][error.key]">{{ error.value }}</p> 
-                        </ng-container>
-                    </ng-container>
-                </div>
-            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+                  <input matStartDate placeholder="Start date" formControlName="start">
+                  <input matEndDate placeholder="End date" formControlName="end">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker" color="accent"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker color="accent"></mat-date-range-picker>
+                <mat-error>Cannot select the same date</mat-error>
+            </mat-form-field>              
             <div class="btn-cont">
                 <button type="submit" mat-raised-button color="primary">Buscar</button>
             </div>
         </form>
     </div>
     <div class="svg-container card" style="position: relative;">
-        <ng-container *ngIf="(points$ | async) as points; else loadingTemplate">
+        <ng-container *ngIf="(points$ | async) as points">
             <app-graph [values]="points"></app-graph>
         </ng-container>
 
-        <ng-template #loadingTemplate>
-            <p style="position: absolute;">Loading...</p>
-        </ng-template>
+        <p *ngIf="loadingData" style="position: absolute;">Loading...</p>
     </div>
 </div>
+
+<input type="date" min="2022-06-18">

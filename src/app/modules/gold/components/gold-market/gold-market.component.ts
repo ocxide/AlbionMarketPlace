@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { finalize, map, Observable, range, tap } from 'rxjs';
 
-import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Value } from '../../interfaces/value';
-import { sameDateValidator } from '../../validators/same-date.validators';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { Value } from '@gold/interfaces/value';
+import { sameDateFn } from '@gold/validators/same-date.validators';
 import { GoldMarketService } from './services/gold-market.service';
 @Component({
   selector: 'app-gold-market',
@@ -12,12 +12,29 @@ import { GoldMarketService } from './services/gold-market.service';
 })
 export class GoldMarketComponent implements OnInit {
 
+  
+  minDate = new Date(new Date().getFullYear(), 5, 10)
+  
   range = new FormGroup({
     start: new FormControl('', { nonNullable: true, validators: Validators.required }),
-    end: new FormControl('', { nonNullable: true, validators: Validators.required })
-  }, {
-    validators: sameDateValidator('start', 'end')
+    end: new FormControl('', { nonNullable: true, validators: [Validators.required, sameDateFn('start')] })
   })
+  minDate$ = (this.range.get('start')?.valueChanges)?.pipe(
+    tap(console.log),
+    map(date => {
+    const d = new Date(date)
+    d.setDate(d.getTime() + 1)
+    return d
+  }))
+
+  maxDate = (() => {
+    const d = new Date()
+    d.setDate(d.getDate()+1)
+    //d.setTime(d.getDate()-20)
+    return d
+  })()
+
+  loadingData: boolean = false;
 
   messageErrors: { [key: string]: { [key: string]: string } } = {
     'start': {
@@ -43,9 +60,12 @@ export class GoldMarketComponent implements OnInit {
   
   submit() {
     if (this.range.invalid) return;
-    
+
+    this.minDate.setTime(this.minDate.getTime() + 1)
+
+    this.loadingData = true;
     const { start, end } = this.range.value
-    this.points$ = this.glmServ.getGoldPrices(start!, end!)
+    this.points$ = this.glmServ.getGoldPrices(start!, end!).pipe(finalize(() => this.loadingData = false))
   }
 
 }
